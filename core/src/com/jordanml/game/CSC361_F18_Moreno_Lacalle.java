@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CSC361_F18_Moreno-Lacalle extends ApplicationAdapter {
+public class CSC361_F18_Moreno_Lacalle extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	
