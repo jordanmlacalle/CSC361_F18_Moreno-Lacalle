@@ -74,7 +74,7 @@ public class Level
     private void init(String filename)
     {
         lands = new Array<Land>();
-        background = new Background(20, 20);
+        background = new Background(20,15);
         
         // Load image file that represents the level data
         Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
@@ -99,24 +99,40 @@ public class Level
                 {
                     // do nothing
                 } 
-                else if (BLOCK_TYPE.LAND_NORM.sameColor(currentPixel) || BLOCK_TYPE.LAND_FLOAT.sameColor(currentPixel))
+                else if (isLand(currentPixel))
                 {
-                    // IF the previous pixel was a different color (not Land)
-                    if (lastPixel != currentPixel)
+                    
+                    // CHECK FOR LEFT EDGE
+                    if(lastPixel != currentPixel)
                     {
-                        if(BLOCK_TYPE.LAND_NORM.sameColor(currentPixel))
-                            obj = new Land(Land.LAND_TYPE.NORM);
-                        else
-                            obj = new Land(Land.LAND_TYPE.FLOAT);
+                        //do nothing
+                    }
+                    else
+                    {
+                        // CHECK FOR MIDDLE
+                        // Check if current pixel is middle (extend)
+                        if(isLand(pixmap.getPixel(pixelX + 1, pixelY)))
+                        {
+                            if(!isLand(pixmap.getPixel(pixelX - 2, pixelY)))
+                            {
+                                // New land
+                                if(BLOCK_TYPE.LAND_NORM.sameColor(currentPixel))
+                                    obj = new Land(Land.LAND_TYPE.NORM);
+                                else
+                                    obj = new Land(Land.LAND_TYPE.FLOAT);
 
-                        float heightIncreaseFactor = 0.25f;
-                        offsetHeight = -2.5f;
-                        obj.position.set(pixelX, baseHeight * obj.dimension.y * heightIncreaseFactor + offsetHeight);
-                        lands.add((Land) obj);
-                    } 
-                    else // IF the previous pixel was the same color (continuation of the same land)
-                    {
-                        lands.get(lands.size - 1).increaseLength(1);
+                                float heightIncreaseFactor = 0.25f;
+                                offsetHeight = 0.0f;
+                                obj.position.set(pixelX , baseHeight + offsetHeight);
+                                lands.add((Land) obj);
+                            }
+                            else
+                            {
+                                // Extend Land
+                                lands.get(lands.size - 1).increaseLength(1);
+                            }
+                        }
+                            
                     }
                 } 
                 else
@@ -135,12 +151,27 @@ public class Level
     }
     
     /**
+     * Checks if the given pixel is a Land block
+     * @param pixel the pixel to be checked
+     * @return true if the pixel is a Land block
+     */
+    public boolean isLand(int pixel)
+    {
+        if(BLOCK_TYPE.LAND_NORM.sameColor(pixel) || BLOCK_TYPE.LAND_FLOAT.sameColor(pixel))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * Update level objects with respect to time passed since the previous frame
      * 
      * @param deltaTime time passed since the previous frame
      */
     public void update(float deltaTime)
-    {
+    {        
         for(Land land : lands)
         {
             land.update(deltaTime);
@@ -154,6 +185,7 @@ public class Level
      */
     public void render(SpriteBatch batch)
     {
+        background.render(batch);
         
         for(Land land : lands)
         {
