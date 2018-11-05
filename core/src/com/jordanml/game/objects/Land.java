@@ -7,12 +7,19 @@ import com.jordanml.game.assets.Assets;
 
 public class Land extends AbstractGameObject
 {
+    //enum representing type of Land (floating or normal)
     public enum LAND_TYPE
     {
         NORM,
         FLOAT;
     }
  
+    /**
+     * length    - the length of a block of land
+     * landType  - the land type (floating or normal)
+     * regEdge   - texture region representing the edge of a block of Land
+     * regMiddle - texture region representing the middle of a block of Land 
+     */
     private int length;
     private LAND_TYPE landType;
     private TextureRegion regEdge;
@@ -31,7 +38,7 @@ public class Land extends AbstractGameObject
     private void init(LAND_TYPE type)
     {
         landType = type;
-        dimension.set(1.0f, 1.5f);
+        dimension.set(1.0f, 1.0f);
         
         if(landType == LAND_TYPE.NORM)
         {
@@ -70,6 +77,9 @@ public class Land extends AbstractGameObject
         setLength(length + amount);
     }
     
+    /**
+     * Renders the Land with edges added on the left and right ends
+     */
     @Override
     public void render(SpriteBatch batch)
     {
@@ -80,8 +90,8 @@ public class Land extends AbstractGameObject
 
         // Draw left edge
         reg = regEdge;
-        relX -= dimension.x / 4;
-        batch.draw(reg.getTexture(), position.x + relX, position.y + relY, origin.x, origin.y, dimension.x / 4 + 0.1f,
+        relX -= dimension.x;
+        batch.draw(reg.getTexture(), position.x + relX, position.y + relY, origin.x, origin.y, dimension.x,
                 dimension.y, scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(),
                 reg.getRegionHeight(), false, false);
 
@@ -90,16 +100,23 @@ public class Land extends AbstractGameObject
         reg = regMiddle;
         for (int i = 0; i < length; i++)
         {
-            batch.draw(reg.getTexture(), position.x + relX, position.y + relY, origin.x, origin.y, dimension.x + 0.1f,
+            boolean flip;
+            
+            if(i%2 == 0)
+                flip = true;
+            else
+                flip = false;
+            
+            batch.draw(reg.getTexture(), position.x + relX, position.y + relY, origin.x, origin.y, dimension.x + 0.01f,
                     dimension.y, scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(),
-                    reg.getRegionHeight(), false, false);
+                    reg.getRegionHeight(), flip, false);
             relX += dimension.x;
         }
 
         // Draw right edge
         reg = regEdge;
-        batch.draw(reg.getTexture(), position.x + relX, position.y + relY, origin.x + dimension.x / 8 + 0.1f, origin.y,
-                dimension.x / 4, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
+        batch.draw(reg.getTexture(), position.x + relX, position.y + relY, origin.x + dimension.x / 8, origin.y,
+                dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
                 reg.getRegionWidth(), reg.getRegionHeight(), true, false);
         
     }
