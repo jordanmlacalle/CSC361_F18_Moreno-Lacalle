@@ -52,10 +52,10 @@ public class WorldRenderer implements Disposable
      */
     private void renderWorld(SpriteBatch batch)
     {
+        worldController.cameraHelper.applyTo(camera);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        // Nothing to render yet
-        // TODO: Will render level here down the line
+        worldController.level.render(batch);
         batch.end();
     }
 

@@ -1,0 +1,701 @@
+
+hallowed.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 132
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 1
+land_edge_float
+  rotate: false
+  xy: 2, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+land_edge_norm
+  rotate: false
+  xy: 132, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+land_middle_float
+  rotate: false
+  xy: 262, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+land_middle_norm
+  rotate: false
+  xy: 392, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+hallowed2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 2
+
+hallowed3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 3
+
+hallowed4.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 4
+
+hallowed5.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 5
+
+hallowed6.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 6
+
+hallowed7.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 7
+
+hallowed8.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 8
+
+hallowed9.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 9
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
+  index: 10
+
+hallowed10.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 197
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 1
+powerup
+  rotate: false
+  xy: 583, 642
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 1
+powerup
+  rotate: false
+  xy: 583, 322
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 2
+powerup
+  rotate: false
+  xy: 583, 2
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 3
+
+hallowed11.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 197
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 2
+powerup
+  rotate: false
+  xy: 583, 642
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 4
+powerup
+  rotate: false
+  xy: 583, 322
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 5
+powerup
+  rotate: false
+  xy: 583, 2
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 6
+
+hallowed12.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 3
+
+hallowed13.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 4
+
+hallowed14.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 5
+
+hallowed15.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 6
+
+hallowed16.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 7
+
+hallowed17.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 8
+
+hallowed18.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 9
+
+hallowed19.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_idle
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 10
+
+hallowed20.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 1
+
+hallowed21.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 2
+
+hallowed22.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 3
+
+hallowed23.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 4
+
+hallowed24.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 5
+
+hallowed25.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 6
+
+hallowed26.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 7
+
+hallowed27.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 8
+
+hallowed28.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 9
+
+hallowed29.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_jump
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 10
+
+hallowed30.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 1
+
+hallowed31.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 2
+
+hallowed32.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 3
+
+hallowed33.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 4
+
+hallowed34.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 5
+
+hallowed35.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 6
+
+hallowed36.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 7
+
+hallowed37.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_run
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 8
+
+hallowed38.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 1
+
+hallowed39.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 2
+
+hallowed40.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 3
+
+hallowed41.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 4
+
+hallowed42.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 5
+
+hallowed43.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 6
+
+hallowed44.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 7
+
+hallowed45.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 8
+
+hallowed46.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 9
+
+hallowed47.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 10
+
+hallowed48.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 2
+  size: 720, 411
+  orig: 720, 411
+  offset: 0, 0
+  index: -1
