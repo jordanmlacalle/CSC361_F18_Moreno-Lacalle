@@ -2,6 +2,12 @@ package com.jordanml.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.World;
 
 import com.jordanml.game.assets.Assets;
 
@@ -11,7 +17,9 @@ public class Land extends AbstractGameObject
     public enum LAND_TYPE
     {
         NORM,
-        FLOAT;
+        FLOAT,
+        EDGE_NORM,
+        EDGE_FLOAT;
     }
  
     /**
@@ -38,20 +46,65 @@ public class Land extends AbstractGameObject
     private void init(LAND_TYPE type)
     {
         landType = type;
-        dimension.set(1.0f, 1.0f);
         
         if(landType == LAND_TYPE.NORM)
         {
             regEdge = Assets.instance.land.edge_norm;
             regMiddle = Assets.instance.land.middle_norm;
+            dimension.set(1.0f, 1.0f);
+            setLength(1);
         }
         else if(landType == LAND_TYPE.FLOAT)
         {
             regEdge = Assets.instance.land.edge_float;
             regMiddle = Assets.instance.land.middle_float;
+            dimension.set(1.0f, 0.75f);
+            setLength(1);
+        }
+        else if(landType == LAND_TYPE.EDGE_NORM)
+        {
+            dimension.set(1.0f, 1.0f);
+            setLength(1);
+        }
+        else if(landType == LAND_TYPE.EDGE_FLOAT)
+        {
+            dimension.set(1.0f, 0.5f);
+            setLength(1);
+        }        
+    }
+    
+    /**
+     * Initializes the box2d physics for this Land object
+     * @param world
+     */
+    public void initPhysics(World world)
+    {
+        float hRatio = 1.0f;
+        float offsetHeight = 0.0f;
+        
+        // Modify bounds fixture shape if land is "floating" type
+        if(landType == LAND_TYPE.FLOAT)
+        {
+            hRatio = 0.5f / 0.75f;
+            offsetHeight = 0.125f;
         }
         
-        setLength(1);
+        // Create new body for Land
+        BodyDef bodyDef = new BodyDef();
+        // Land is static
+        bodyDef.type = BodyType.KinematicBody;
+        bodyDef.position.set(this.position);
+        // Create new body using body definition
+        Body body = world.createBody(bodyDef);
+        this.body = body;
+        PolygonShape polygonShape = new PolygonShape();
+        origin.x = this.bounds.width / 2.0f;
+        origin.y = this.bounds.height / 2.0f + offsetHeight;
+        polygonShape.setAsBox(this.bounds.width / 2.0f, this.bounds.height / 2.0f * hRatio, origin, 0);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = polygonShape;
+        body.createFixture(fixtureDef);
+        polygonShape.dispose();
     }
     
     /**
@@ -62,6 +115,9 @@ public class Land extends AbstractGameObject
     public void setLength(int length)
     {
         this.length = length;
+        
+        if(landType == LAND_TYPE.EDGE_FLOAT)
+            System.out.println("Setting length of floating land...");
 
         // Update bounding box for collision detection
         bounds.set(0, 0, dimension.x * length, dimension.y);
@@ -77,12 +133,22 @@ public class Land extends AbstractGameObject
         setLength(length + amount);
     }
     
+    @Override
+    public void update(float deltaTime)
+    {
+        super.update(deltaTime);
+    }
+    
     /**
      * Renders the Land with edges added on the left and right ends
      */
     @Override
     public void render(SpriteBatch batch)
     {
+        
+        if(landType == LAND_TYPE.EDGE_NORM || landType == LAND_TYPE.EDGE_FLOAT)
+            return;
+        
         TextureRegion reg = null;
 
         float relX = 0;
