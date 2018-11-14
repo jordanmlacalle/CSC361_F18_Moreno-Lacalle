@@ -102,25 +102,10 @@ public class Level
                     // do nothing
                 } 
                 else if(isLand(currentPixel))
-                {
-                    
-                    // CHECK FOR LEFT EDGE
+                {                    
                     if(lastPixel != currentPixel || !isLand(pixmap.getPixel(pixelX + 1, pixelY)))
                     {
-                        if(BLOCK_TYPE.LAND_NORM.sameColor(currentPixel))
-                        {
-                            obj = new Land(Land.LAND_TYPE.EDGE_NORM);
-                            offsetHeight = 0.0f;
-                        }
-                        else
-                        {
-                            obj = new Land(Land.LAND_TYPE.EDGE_FLOAT);
-                            offsetHeight = 0.25f;
-                        }
-                            
-                        
-                        obj.position.set(pixelX, baseHeight + offsetHeight);
-                        lands.add((Land) obj);
+                        /** DO NOTHING*/
                     }
                     else
                     {
