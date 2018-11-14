@@ -2,6 +2,7 @@ package com.jordanml.game.update;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Disposable;
 
 import com.jordanml.game.assets.Assets;
@@ -18,6 +19,9 @@ public class WorldRenderer implements Disposable
     private SpriteBatch batch;
     private WorldController worldController;
 
+    // TODO: Remove box2DDebugDraw
+    private Box2DDebugRenderer b2Debug;
+    
     // TODO: Will need a camera for GUI down the line
             
     public WorldRenderer(WorldController worldController)
@@ -35,6 +39,9 @@ public class WorldRenderer implements Disposable
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         camera.position.set(0, 0, 0);
         camera.update();
+        
+        //TODO: remove b2Debug
+        b2Debug = new Box2DDebugRenderer();
     }
 
     /**
@@ -43,6 +50,8 @@ public class WorldRenderer implements Disposable
     public void render()
     {
         renderWorld(batch);
+        // TODO: remove b2Debug.render() call
+        b2Debug.render(worldController.world, camera.combined);
     }
 
     /**
