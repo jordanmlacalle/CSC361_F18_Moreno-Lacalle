@@ -25,6 +25,7 @@ public class Assets implements Disposable, AssetErrorListener
     
     public AssetLand land;
     public AssetDecorations decorations;
+    public AssetPlayer player;
     
     // Singleton
     private Assets()
@@ -58,7 +59,7 @@ public class Assets implements Disposable, AssetErrorListener
         // create game resource objects
         land = new AssetLand(atlas);
         decorations = new AssetDecorations(atlas);
-        
+        player = new AssetPlayer(atlas);
     }
     
     /**
@@ -77,6 +78,19 @@ public class Assets implements Disposable, AssetErrorListener
     public void error(AssetDescriptor asset, Throwable throwable)
     {
         Gdx.app.error(TAG, "Couldn't load asset '" + asset.fileName + "'", (Exception)throwable);
+    }
+    
+    /**
+     * Class that acts as a container for Player assets
+     */
+    public class AssetPlayer
+    {
+        public final AtlasRegion player;
+        
+        public AssetPlayer(TextureAtlas atlas)
+        {
+            player = atlas.findRegion("jack_idle", 1);
+        }
     }
     
     /**
