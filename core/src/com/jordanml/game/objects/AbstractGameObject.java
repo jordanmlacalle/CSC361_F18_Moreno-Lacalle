@@ -1,6 +1,7 @@
 package com.jordanml.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -59,8 +60,12 @@ public abstract class AbstractGameObject
      * @param deltaTime time passed since the previous frame
      */
     public void update(float deltaTime)
-    {
-        
+    {        
+       if(body != null)
+       {
+           position.set(body.getPosition());
+           rotation = body.getAngle() * MathUtils.radiansToDegrees;
+       }
     }
     
     /**
