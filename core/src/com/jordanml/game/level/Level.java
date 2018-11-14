@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Player;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Background;
 
@@ -16,6 +17,7 @@ public class Level
     // Objects
     public Array<Land> lands;
     public Background background;
+    public Player player;
     
     public enum BLOCK_TYPE
     {
@@ -99,13 +101,26 @@ public class Level
                 {
                     // do nothing
                 } 
-                else if (isLand(currentPixel))
+                else if(isLand(currentPixel))
                 {
                     
                     // CHECK FOR LEFT EDGE
-                    if(lastPixel != currentPixel)
+                    if(lastPixel != currentPixel || !isLand(pixmap.getPixel(pixelX + 1, pixelY)))
                     {
-                        //do nothing
+                        if(BLOCK_TYPE.LAND_NORM.sameColor(currentPixel))
+                        {
+                            obj = new Land(Land.LAND_TYPE.EDGE_NORM);
+                            offsetHeight = 0.0f;
+                        }
+                        else
+                        {
+                            obj = new Land(Land.LAND_TYPE.EDGE_FLOAT);
+                            offsetHeight = 0.25f;
+                        }
+                            
+                        
+                        obj.position.set(pixelX, baseHeight + offsetHeight);
+                        lands.add((Land) obj);
                     }
                     else
                     {
@@ -121,9 +136,8 @@ public class Level
                                 else
                                     obj = new Land(Land.LAND_TYPE.FLOAT);
 
-                                float heightIncreaseFactor = 0.25f;
-                                offsetHeight = 0.0f;
-                                obj.position.set(pixelX , baseHeight + offsetHeight);
+                                obj.position.set(pixelX , baseHeight);
+
                                 lands.add((Land) obj);
                             }
                             else
@@ -135,6 +149,12 @@ public class Level
                             
                     }
                 } 
+                else if(BLOCK_TYPE.PLAYER_SPAWN.sameColor(currentPixel))
+                {
+                    obj = new Player();
+                    obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
+                    player = (Player) obj;
+                }
                 else
                 {
                     // decode currentPixel color
@@ -176,6 +196,8 @@ public class Level
         {
             land.update(deltaTime);
         }
+        
+        player.update(deltaTime);
     }
     
     /**
@@ -191,6 +213,8 @@ public class Level
         {
             land.render(batch);
         }
+        
+        player.render(batch);
     }
 }
 
