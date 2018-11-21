@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Disposable;
@@ -26,6 +28,10 @@ public class Assets implements Disposable, AssetErrorListener
     public AssetLand land;
     public AssetDecorations decorations;
     public AssetPlayer player;
+    public AssetGui gui;
+    public AssetMusic music;
+    public AssetFonts fonts;
+    public AssetCandy candy;
     
     // Singleton
     private Assets()
@@ -39,6 +45,7 @@ public class Assets implements Disposable, AssetErrorListener
         assetManager.setErrorListener(this);
         // load texture atlas
         assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
+        assetManager.load("music/menu_song.mp3", Music.class);
         assetManager.finishLoading();
 
         Gdx.app.debug(TAG, "# of assets loaded: " + assetManager.getAssetNames().size);
@@ -60,6 +67,10 @@ public class Assets implements Disposable, AssetErrorListener
         land = new AssetLand(atlas);
         decorations = new AssetDecorations(atlas);
         player = new AssetPlayer(atlas);
+        gui = new AssetGui(atlas);
+        music = new AssetMusic(assetManager);
+        candy = new AssetCandy(atlas);
+        fonts = new AssetFonts();
     }
     
     /**
@@ -125,4 +136,67 @@ public class Assets implements Disposable, AssetErrorListener
         }
     }
     
+    /**
+     * Class that acts as a container for GUI assets
+     */
+    public class AssetGui
+    {
+        public final AtlasRegion pumpkin;
+        
+        public AssetGui(TextureAtlas atlas)
+        {
+            pumpkin = atlas.findRegion("pumpkin");
+        }
+    }
+    
+    /**
+     * Class that acts as a container for Music assets
+     */
+    public class AssetMusic
+    {
+        public final Music menu;
+        
+        public AssetMusic(AssetManager am)
+        {
+            menu = am.get("music/menu_song.mp3", Music.class);
+        }
+    }
+    
+    public class AssetCandy
+    {
+        public final AtlasRegion candycorn;
+        
+        public AssetCandy(TextureAtlas atlas)
+        {
+            candycorn = atlas.findRegion("candycorn");
+        }
+    }
+    /**
+     * Gathers fonts to be used for text necessary to provide the user information while playing
+     * the game.
+     */
+    public class AssetFonts
+    {
+        public final BitmapFont defaultSmall;
+        public final BitmapFont defaultNormal;
+        public final BitmapFont defaultBig;
+
+        public AssetFonts()
+        {
+            // create three fonts using Libgdx's 15px bitmap font
+            defaultSmall = new BitmapFont(Gdx.files.internal("images/arial-15.fnt"), true);
+            defaultNormal = new BitmapFont(Gdx.files.internal("images/arial-15.fnt"), true);
+            defaultBig = new BitmapFont(Gdx.files.internal("images/arial-15.fnt"), true);
+
+            // set font sizes
+            defaultSmall.getData().setScale(0.75f);
+            defaultNormal.getData().setScale(1.0f);
+            defaultBig.getData().setScale(2.0f);
+
+            // enable linear texture filtering for smooth fonts
+            defaultSmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            defaultNormal.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            defaultBig.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        }
+    }
 }
