@@ -19,7 +19,7 @@ public class DesktopLauncher
             settings.maxWidth = 1024;
             settings.maxHeight = 1024;
             settings.debug = drawDebugOutline;
-            TexturePacker.process(settings, "assets-raw/images","images","hallowed");
+            TexturePacker.process(settings, "assets-raw/images","../core/assets/images","damned");
 	    }
 	    
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
