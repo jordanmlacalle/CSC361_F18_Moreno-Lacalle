@@ -192,7 +192,7 @@ public class Level
      */
     public void render(SpriteBatch batch)
     {
-        background.render(batch);
+        //background.render(batch);
         
         for(Land land : lands)
         {
