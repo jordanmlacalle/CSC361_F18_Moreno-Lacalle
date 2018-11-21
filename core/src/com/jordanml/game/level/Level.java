@@ -9,12 +9,14 @@ import com.jordanml.game.objects.Land;
 import com.jordanml.game.objects.Player;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Background;
+import com.jordanml.game.objects.Candycorn;
 
 public class Level
 {
     public static final String TAG = Level.class.getName();
     
     // Objects
+    public Array<Candycorn> candycorns;
     public Array<Land> lands;
     public Background background;
     public Player player;
@@ -75,6 +77,7 @@ public class Level
      */
     private void init(String filename)
     {
+        candycorns = new Array<Candycorn>();
         lands = new Array<Land>();
         background = new Background(20,15);
         
@@ -134,6 +137,13 @@ public class Level
                             
                     }
                 } 
+                else if(BLOCK_TYPE.CANDY_CORN.sameColor(currentPixel))
+                {
+                    obj = new Candycorn();
+                    offsetHeight = 2.5f;
+                    obj.position.set(pixelX, baseHeight *  obj.dimension.y + offsetHeight);
+                    candycorns.add((Candycorn) obj);
+                }
                 else if(BLOCK_TYPE.PLAYER_SPAWN.sameColor(currentPixel))
                 {
                     obj = new Player();
@@ -193,6 +203,11 @@ public class Level
     public void render(SpriteBatch batch)
     {
         //background.render(batch);
+        
+        for(Candycorn candycorn : candycorns)
+        {
+            candycorn.render(batch);
+        }
         
         for(Land land : lands)
         {
