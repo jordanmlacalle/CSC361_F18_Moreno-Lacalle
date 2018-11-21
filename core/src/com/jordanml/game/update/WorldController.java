@@ -19,9 +19,13 @@ import com.jordanml.game.util.CameraHelper;
 public class WorldController extends InputAdapter
 {    
     public static final String TAG = WorldController.class.getName();
+    
     public Level level;
     public CameraHelper cameraHelper;
     public World world;
+    
+    public int lives;
+    public int score;
     
     public WorldController()
     {
@@ -36,6 +40,8 @@ public class WorldController extends InputAdapter
         // Set world controller as input processor
         Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
+        score = 0;
+        lives = Constants.MAX_LIVES;
         initLevel();
         initPhysics();
     }
@@ -75,6 +81,14 @@ public class WorldController extends InputAdapter
         handleDebugInput(deltaTime);
         level.update(deltaTime);
         world.step(deltaTime, 8, 3);
+        
+        if(level.player.position.y < -5)
+        {
+            // Play life lost sound ?
+            lives--;
+            initLevel();
+            initPhysics();
+        }
         
         cameraHelper.update(deltaTime);
     }
