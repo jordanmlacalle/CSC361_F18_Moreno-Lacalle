@@ -2,13 +2,21 @@ package com.jordanml.game.update;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.jordanml.game.level.Level;
+import com.jordanml.game.objects.AbstractGameObject;
+import com.jordanml.game.objects.Candycorn;
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Player;
 import com.jordanml.game.util.Constants;
 import com.jordanml.game.util.CameraHelper;
 
@@ -56,12 +64,71 @@ public class WorldController extends InputAdapter
         
         world = new World(new Vector2(0, -9.81f), true);
 
+        for(Candycorn candycorn : level.candycorns)
+        {
+            candycorn.initPhysics(world);
+        }
+        
         for(Land land : level.lands)
         {
             land.initPhysics(world);
         }
         
         level.player.initPhysics(world);
+        
+        world.setContactListener(new ContactListener()
+                                {
+
+                                    @Override
+                                    public void beginContact(Contact contact)
+                                    {
+                                        Fixture fixtureA = contact.getFixtureA();
+                                        Fixture fixtureB = contact.getFixtureB();
+                                        Fixture object;
+                                        
+                                        // Check for contact between player and another object
+                                        if(fixtureA.getBody().getUserData() instanceof Player || fixtureB.getBody().getUserData() instanceof Player)
+                                        {   
+                                            if(fixtureA.getBody().getUserData() instanceof Player)
+                                                object = fixtureB;
+                                            else
+                                                object = fixtureA;
+                                            
+                                            // Check for contact between player and Candycorn
+                                            if(object.getBody().getUserData() instanceof Candycorn)
+                                            {
+                                                Gdx.app.debug(TAG, " Player <-> Candycorn");
+                                                
+                                                Candycorn candy = (Candycorn) object.getBody().getUserData();
+                                                candy.collected = true;
+                                                //world.destroyBody(candy.body);
+                                                score += Constants.CANDYCORN_SCORE;
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+
+                                    @Override
+                                    public void endContact(Contact contact)
+                                    {
+                                        // TODO Auto-generated method stub
+                                    }
+
+                                    @Override
+                                    public void preSolve(Contact contact, Manifold oldManifold)
+                                    {
+                                        // TODO Auto-generated method stub
+                                        
+                                    }
+
+                                    @Override
+                                    public void postSolve(Contact contact, ContactImpulse impulse)
+                                    {
+                                        // TODO Auto-generated method stub
+                                        
+                                    }
+                                });
     }
     
     private void initLevel()

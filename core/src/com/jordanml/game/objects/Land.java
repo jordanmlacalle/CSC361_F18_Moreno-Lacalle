@@ -95,6 +95,7 @@ public class Land extends AbstractGameObject
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
         body.createFixture(fixtureDef);
+        body.setUserData(this);
         polygonShape.dispose();
     }
     
