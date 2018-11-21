@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 
 import com.jordanml.game.assets.Assets;
 import com.jordanml.game.screens.GameScreen;
+import com.jordanml.game.screens.MenuScreen;
 
 
 public class CSC361_F18_Moreno_Lacalle extends Game
@@ -22,6 +23,6 @@ public class CSC361_F18_Moreno_Lacalle extends Game
       // Load assets
       Assets.instance.init(new AssetManager());
       // Start game at GameScreen
-      setScreen(new GameScreen(this));
+      setScreen(new MenuScreen(this));
 	}
 }
