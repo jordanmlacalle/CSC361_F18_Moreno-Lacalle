@@ -1,0 +1,55 @@
+
+damned-ui.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 901
+  size: 2000, 1143
+  orig: 2000, 1143
+  offset: 0, 0
+  index: -1
+jack
+  rotate: false
+  xy: 714, 737
+  size: 200, 162
+  orig: 200, 162
+  offset: 0, 0
+  index: -1
+logo
+  rotate: false
+  xy: 2, 300
+  size: 710, 599
+  orig: 710, 599
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 714, 648
+  size: 86, 87
+  orig: 86, 87
+  offset: 0, 0
+  index: -1
+sign
+  rotate: false
+  xy: 290, 205
+  size: 91, 93
+  orig: 91, 93
+  offset: 0, 0
+  index: -1
+tombstone
+  rotate: false
+  xy: 2, 2
+  size: 54, 55
+  orig: 54, 55
+  offset: 0, 0
+  index: -1
+tree
+  rotate: false
+  xy: 2, 59
+  size: 286, 239
+  orig: 286, 239
+  offset: 0, 0
+  index: -1
