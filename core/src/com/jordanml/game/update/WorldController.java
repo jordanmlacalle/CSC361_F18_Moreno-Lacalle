@@ -2,6 +2,7 @@ package com.jordanml.game.update;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.jordanml.game.level.Level;
 import com.jordanml.game.objects.AbstractGameObject;
@@ -34,7 +36,7 @@ public class WorldController extends InputAdapter
     
     public int lives;
     public int score;
-    
+        
     public WorldController()
     {
         init();
@@ -100,9 +102,13 @@ public class WorldController extends InputAdapter
                                                 Gdx.app.debug(TAG, " Player <-> Candycorn");
                                                 
                                                 Candycorn candy = (Candycorn) object.getBody().getUserData();
-                                                candy.collected = true;
-                                                //world.destroyBody(candy.body);
-                                                score += Constants.CANDYCORN_SCORE;
+                                                
+                                                if(!candy.collected)
+                                                {
+                                                    candy.collected = true;
+                                                    //world.destroyBody(candy.body);
+                                                    score += Constants.CANDYCORN_SCORE;
+                                                }
                                             }
                                         }
                                         
