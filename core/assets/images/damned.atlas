@@ -1,46 +1,60 @@
 
-hallowed.png
+damned.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+candycorn
+  rotate: false
+  xy: 724, 122
+  size: 64, 80
+  orig: 64, 80
+  offset: 0, 0
+  index: -1
 jack_dead
   rotate: false
-  xy: 2, 132
+  xy: 2, 204
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
   index: 1
 land_edge_float
   rotate: false
-  xy: 2, 2
+  xy: 204, 74
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 land_edge_norm
   rotate: false
-  xy: 132, 2
+  xy: 334, 74
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 land_middle_float
   rotate: false
-  xy: 262, 2
+  xy: 464, 74
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 land_middle_norm
   rotate: false
-  xy: 392, 2
+  xy: 594, 74
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
+pumpkin
+  rotate: false
+  xy: 2, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
 
-hallowed2.png
+damned2.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -53,7 +67,7 @@ jack_dead
   offset: 0, 0
   index: 2
 
-hallowed3.png
+damned3.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -66,7 +80,7 @@ jack_dead
   offset: 0, 0
   index: 3
 
-hallowed4.png
+damned4.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -79,7 +93,7 @@ jack_dead
   offset: 0, 0
   index: 4
 
-hallowed5.png
+damned5.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -92,7 +106,7 @@ jack_dead
   offset: 0, 0
   index: 5
 
-hallowed6.png
+damned6.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -105,7 +119,7 @@ jack_dead
   offset: 0, 0
   index: 6
 
-hallowed7.png
+damned7.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -118,7 +132,7 @@ jack_dead
   offset: 0, 0
   index: 7
 
-hallowed8.png
+damned8.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -131,7 +145,7 @@ jack_dead
   offset: 0, 0
   index: 8
 
-hallowed9.png
+damned9.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -151,7 +165,7 @@ jack_dead
   offset: 0, 0
   index: 10
 
-hallowed10.png
+damned10.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -185,7 +199,7 @@ powerup
   offset: 0, 0
   index: 3
 
-hallowed11.png
+damned11.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -219,7 +233,7 @@ powerup
   offset: 0, 0
   index: 6
 
-hallowed12.png
+damned12.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -232,7 +246,7 @@ jack_idle
   offset: 0, 0
   index: 3
 
-hallowed13.png
+damned13.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -245,7 +259,7 @@ jack_idle
   offset: 0, 0
   index: 4
 
-hallowed14.png
+damned14.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -258,7 +272,7 @@ jack_idle
   offset: 0, 0
   index: 5
 
-hallowed15.png
+damned15.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -271,7 +285,7 @@ jack_idle
   offset: 0, 0
   index: 6
 
-hallowed16.png
+damned16.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -284,7 +298,7 @@ jack_idle
   offset: 0, 0
   index: 7
 
-hallowed17.png
+damned17.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -297,7 +311,7 @@ jack_idle
   offset: 0, 0
   index: 8
 
-hallowed18.png
+damned18.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -310,7 +324,7 @@ jack_idle
   offset: 0, 0
   index: 9
 
-hallowed19.png
+damned19.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -323,7 +337,7 @@ jack_idle
   offset: 0, 0
   index: 10
 
-hallowed20.png
+damned20.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -336,7 +350,7 @@ jack_jump
   offset: 0, 0
   index: 1
 
-hallowed21.png
+damned21.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -349,7 +363,7 @@ jack_jump
   offset: 0, 0
   index: 2
 
-hallowed22.png
+damned22.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -362,7 +376,7 @@ jack_jump
   offset: 0, 0
   index: 3
 
-hallowed23.png
+damned23.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -375,7 +389,7 @@ jack_jump
   offset: 0, 0
   index: 4
 
-hallowed24.png
+damned24.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -388,7 +402,7 @@ jack_jump
   offset: 0, 0
   index: 5
 
-hallowed25.png
+damned25.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -401,7 +415,7 @@ jack_jump
   offset: 0, 0
   index: 6
 
-hallowed26.png
+damned26.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -414,7 +428,7 @@ jack_jump
   offset: 0, 0
   index: 7
 
-hallowed27.png
+damned27.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -427,7 +441,7 @@ jack_jump
   offset: 0, 0
   index: 8
 
-hallowed28.png
+damned28.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -440,7 +454,7 @@ jack_jump
   offset: 0, 0
   index: 9
 
-hallowed29.png
+damned29.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -453,7 +467,7 @@ jack_jump
   offset: 0, 0
   index: 10
 
-hallowed30.png
+damned30.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -466,7 +480,7 @@ jack_run
   offset: 0, 0
   index: 1
 
-hallowed31.png
+damned31.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -479,7 +493,7 @@ jack_run
   offset: 0, 0
   index: 2
 
-hallowed32.png
+damned32.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -492,7 +506,7 @@ jack_run
   offset: 0, 0
   index: 3
 
-hallowed33.png
+damned33.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -505,7 +519,7 @@ jack_run
   offset: 0, 0
   index: 4
 
-hallowed34.png
+damned34.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -518,7 +532,7 @@ jack_run
   offset: 0, 0
   index: 5
 
-hallowed35.png
+damned35.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -531,7 +545,7 @@ jack_run
   offset: 0, 0
   index: 6
 
-hallowed36.png
+damned36.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -544,7 +558,7 @@ jack_run
   offset: 0, 0
   index: 7
 
-hallowed37.png
+damned37.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -557,7 +571,7 @@ jack_run
   offset: 0, 0
   index: 8
 
-hallowed38.png
+damned38.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -570,7 +584,7 @@ jack_walk
   offset: 0, 0
   index: 1
 
-hallowed39.png
+damned39.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -583,7 +597,7 @@ jack_walk
   offset: 0, 0
   index: 2
 
-hallowed40.png
+damned40.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -596,7 +610,7 @@ jack_walk
   offset: 0, 0
   index: 3
 
-hallowed41.png
+damned41.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -609,7 +623,7 @@ jack_walk
   offset: 0, 0
   index: 4
 
-hallowed42.png
+damned42.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -622,7 +636,7 @@ jack_walk
   offset: 0, 0
   index: 5
 
-hallowed43.png
+damned43.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -635,7 +649,7 @@ jack_walk
   offset: 0, 0
   index: 6
 
-hallowed44.png
+damned44.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -648,7 +662,7 @@ jack_walk
   offset: 0, 0
   index: 7
 
-hallowed45.png
+damned45.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -661,7 +675,7 @@ jack_walk
   offset: 0, 0
   index: 8
 
-hallowed46.png
+damned46.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -674,7 +688,7 @@ jack_walk
   offset: 0, 0
   index: 9
 
-hallowed47.png
+damned47.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -687,7 +701,7 @@ jack_walk
   offset: 0, 0
   index: 10
 
-hallowed48.png
+damned48.png
 size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest

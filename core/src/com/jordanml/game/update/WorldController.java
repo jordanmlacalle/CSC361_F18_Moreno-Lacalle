@@ -2,13 +2,23 @@ package com.jordanml.game.update;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.jordanml.game.level.Level;
+import com.jordanml.game.objects.AbstractGameObject;
+import com.jordanml.game.objects.Candycorn;
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Player;
 import com.jordanml.game.util.Constants;
 import com.jordanml.game.util.CameraHelper;
 
@@ -19,10 +29,14 @@ import com.jordanml.game.util.CameraHelper;
 public class WorldController extends InputAdapter
 {    
     public static final String TAG = WorldController.class.getName();
+    
     public Level level;
     public CameraHelper cameraHelper;
     public World world;
     
+    public int lives;
+    public int score;
+        
     public WorldController()
     {
         init();
@@ -36,6 +50,8 @@ public class WorldController extends InputAdapter
         // Set world controller as input processor
         Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
+        score = 0;
+        lives = Constants.MAX_LIVES;
         initLevel();
         initPhysics();
     }
@@ -50,12 +66,75 @@ public class WorldController extends InputAdapter
         
         world = new World(new Vector2(0, -9.81f), true);
 
+        for(Candycorn candycorn : level.candycorns)
+        {
+            candycorn.initPhysics(world);
+        }
+        
         for(Land land : level.lands)
         {
             land.initPhysics(world);
         }
         
         level.player.initPhysics(world);
+        
+        world.setContactListener(new ContactListener()
+                                {
+
+                                    @Override
+                                    public void beginContact(Contact contact)
+                                    {
+                                        Fixture fixtureA = contact.getFixtureA();
+                                        Fixture fixtureB = contact.getFixtureB();
+                                        Fixture object;
+                                        
+                                        // Check for contact between player and another object
+                                        if(fixtureA.getBody().getUserData() instanceof Player || fixtureB.getBody().getUserData() instanceof Player)
+                                        {   
+                                            if(fixtureA.getBody().getUserData() instanceof Player)
+                                                object = fixtureB;
+                                            else
+                                                object = fixtureA;
+                                            
+                                            // Check for contact between player and Candycorn
+                                            if(object.getBody().getUserData() instanceof Candycorn)
+                                            {
+                                                Gdx.app.debug(TAG, " Player <-> Candycorn");
+                                                
+                                                Candycorn candy = (Candycorn) object.getBody().getUserData();
+                                                
+                                                if(!candy.collected)
+                                                {
+                                                    candy.collected = true;
+                                                    //world.destroyBody(candy.body);
+                                                    score += Constants.CANDYCORN_SCORE;
+                                                }
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+
+                                    @Override
+                                    public void endContact(Contact contact)
+                                    {
+                                        // TODO Auto-generated method stub
+                                    }
+
+                                    @Override
+                                    public void preSolve(Contact contact, Manifold oldManifold)
+                                    {
+                                        // TODO Auto-generated method stub
+                                        
+                                    }
+
+                                    @Override
+                                    public void postSolve(Contact contact, ContactImpulse impulse)
+                                    {
+                                        // TODO Auto-generated method stub
+                                        
+                                    }
+                                });
     }
     
     private void initLevel()
@@ -75,6 +154,14 @@ public class WorldController extends InputAdapter
         handleDebugInput(deltaTime);
         level.update(deltaTime);
         world.step(deltaTime, 8, 3);
+        
+        if(level.player.position.y < -5)
+        {
+            // Play life lost sound ?
+            lives--;
+            initLevel();
+            initPhysics();
+        }
         
         cameraHelper.update(deltaTime);
     }
