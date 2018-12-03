@@ -22,7 +22,7 @@ public class WorldRenderer implements Disposable
     private SpriteBatch batch;
     private WorldController worldController;
 
-    // TODO: Remove box2DDebugDraw
+    private final boolean BOX2D_DEBUG = false;
     private Box2DDebugRenderer b2Debug;
     
     // TODO: Will need a camera for GUI down the line
@@ -54,7 +54,6 @@ public class WorldRenderer implements Disposable
         //cameraBg.setToOrtho(true);
         cameraBg.update();
         
-        //TODO: remove b2Debug
         b2Debug = new Box2DDebugRenderer();
     }
 
@@ -67,7 +66,8 @@ public class WorldRenderer implements Disposable
         renderWorld(batch);
         renderGui(batch);
         // TODO: remove b2Debug.render() call
-        b2Debug.render(worldController.world, camera.combined);
+        if(BOX2D_DEBUG)
+            b2Debug.render(worldController.world, camera.combined);
     }
 
     /**
