@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -20,6 +21,7 @@ import com.jordanml.game.objects.Candycorn;
 import com.jordanml.game.objects.Land;
 import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
+import com.jordanml.game.screens.MenuScreen;
 import com.jordanml.game.util.Constants;
 import com.jordanml.game.util.CameraHelper;
 
@@ -37,9 +39,13 @@ public class WorldController extends InputAdapter
     
     public int lives;
     public int score;
-        
-    public WorldController()
+    
+    private Game game;
+    private float timeLeftGameOverDelay;
+    
+    public WorldController(Game game)
     {
+        this.game = game;
         init();
     }
     
@@ -125,6 +131,7 @@ public class WorldController extends InputAdapter
                                                 {
                                                     orb.collected = true;
                                                     score += Constants.ORB_SCORE;
+                                                    level.player.collectedOrb();
                                                 }
                                             }
                                         }
@@ -154,6 +161,9 @@ public class WorldController extends InputAdapter
                                 });
     }
     
+    /**
+     * Initializes the level
+     */
     private void initLevel()
     {
         level = new Level(Constants.LEVEL_01);
@@ -175,14 +185,51 @@ public class WorldController extends InputAdapter
         
         cameraHelper.update(deltaTime);
         
-        if(level.player.position.y < -5)
+        if(isGameOver())
+        {
+            timeLeftGameOverDelay -= deltaTime;
+            
+            if(timeLeftGameOverDelay < 0)
+            {
+                backToMenu();
+                return;
+            }
+        }
+        
+        // Check if player has fallen off
+        else if(level.player.position.y < -5)
         {
             // Play life lost sound ?
             lives--;
-            initLevel();
+            
+            if(isGameOver())
+            {
+                timeLeftGameOverDelay = Constants.GAME_OVER_DELAY;
+            }
+            else
+                initLevel();
         }
     }
+    
+    /**
+     * Check if the game is over
+     * @return true if the game is over
+     */
+    public boolean isGameOver()
+    {
+        if(lives < 0)
+            return true;
+        else
+            return false;
+    }
 
+    /**
+     * Return player to the menu screen
+     */
+    private void backToMenu()
+    {
+        game.setScreen(new MenuScreen(game));
+    }
     /**
      * Handles some special inputs for resetting game world and switching camera target
      * @param keycode the keycode for the pressed key
