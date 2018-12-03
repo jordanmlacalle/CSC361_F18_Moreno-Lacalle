@@ -31,5 +31,6 @@ public class Constants
     // Level constants
     public static final int MAX_LIVES = 3;
     public static final int CANDYCORN_SCORE = 50;
+    public static final int ORB_SCORE = 100;
     
 }

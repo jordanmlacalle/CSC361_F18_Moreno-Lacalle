@@ -35,6 +35,7 @@ public class Assets implements Disposable, AssetErrorListener
     public AssetMusic music;
     public AssetFonts fonts;
     public AssetCandy candy;
+    public AssetOrb orb;
     
     // Singleton
     private Assets()
@@ -73,6 +74,7 @@ public class Assets implements Disposable, AssetErrorListener
         gui = new AssetGui(atlas);
         music = new AssetMusic(assetManager);
         candy = new AssetCandy(atlas);
+        orb = new AssetOrb(atlas);
         fonts = new AssetFonts();
     }
     
@@ -180,6 +182,9 @@ public class Assets implements Disposable, AssetErrorListener
         }
     }
     
+    /**
+     * Class that acts as a container for Candy collectible assets
+     */
     public class AssetCandy
     {
         public final AtlasRegion candycorn;
@@ -187,6 +192,22 @@ public class Assets implements Disposable, AssetErrorListener
         public AssetCandy(TextureAtlas atlas)
         {
             candycorn = atlas.findRegion("candycorn");
+        }
+    }
+    
+    /**
+     * Class that acts as a container or Orb assets
+     */
+    public class AssetOrb
+    {
+        public final Animation<TextureRegion> animNormal;
+        
+        public AssetOrb(TextureAtlas atlas)
+        {
+            Array<AtlasRegion> regions = null;
+            
+            regions = atlas.findRegions("powerup");
+            animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
         }
     }
     /**

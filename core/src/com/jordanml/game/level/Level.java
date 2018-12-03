@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Background;
@@ -18,6 +19,7 @@ public class Level
     // Objects
     public Array<Candycorn> candycorns;
     public Array<Land> lands;
+    public Array<Orb> orbs;
     public Background background;
     public Player player;
     
@@ -28,6 +30,7 @@ public class Level
         LAND_NORM    (  0, 255,   0), // Green
         LAND_FLOAT   (  0, 255, 255), // Green + Blue
         CANDY_CORN   (255, 255,   0), // Yellow
+        ORB          (  0,   0, 255), // Blue
         GOAL         (255,   0,   0); // Red
         
         // The color of the block
@@ -78,6 +81,7 @@ public class Level
     private void init(String filename)
     {
         candycorns = new Array<Candycorn>();
+        orbs = new Array<Orb>();
         lands = new Array<Land>();
         background = new Background(20,15);
         
@@ -150,6 +154,12 @@ public class Level
                     obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
                     player = (Player) obj;
                 }
+                else if(BLOCK_TYPE.ORB.sameColor(currentPixel))
+                {
+                    obj = new Orb();
+                    obj.position.set(pixelX, baseHeight + offsetHeight);
+                    orbs.add((Orb) obj);
+                }
                 else
                 {
                     // decode currentPixel color
@@ -192,6 +202,10 @@ public class Level
             land.update(deltaTime);
         }
         
+        for(Orb orb : orbs)
+        {
+            orb.update(deltaTime);
+        }
         player.update(deltaTime);
     }
     
@@ -212,6 +226,11 @@ public class Level
         for(Land land : lands)
         {
             land.render(batch);
+        }
+        
+        for(Orb orb : orbs)
+        {
+            orb.render(batch);
         }
         
         player.render(batch);
