@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.jordanml.game.assets.Assets;
+import com.jordanml.game.util.Constants;
 
 public class Player extends AbstractGameObject
 {
@@ -50,6 +51,9 @@ public class Player extends AbstractGameObject
     private MOVE_STATE moveState;
     private JUMP_STATE jumpState;
     
+    private boolean hasOrb;
+    private float orbTimeout;
+    
     public Player()
     {
         init();
@@ -64,6 +68,11 @@ public class Player extends AbstractGameObject
         animIdle = Assets.instance.player.animIdle;
         animRun = Assets.instance.player.animRun;
         animJump = Assets.instance.player.animJump;
+        
+        // Set initial animation
+        setAnimation(animIdle);
+        
+        hasOrb = false;
         
         // Set Player dimensions
         dimension.set(1, 1);        
@@ -116,6 +125,10 @@ public class Player extends AbstractGameObject
     public void update(float deltaTime)
     {
         super.update(deltaTime);
+        
+        if(hasOrb)
+            orbTimeout -= deltaTime;
+        
         velocity = body.getLinearVelocity();
         
         if(velocity.x < 0)
@@ -225,7 +238,15 @@ public class Player extends AbstractGameObject
         switch(jumpState)
         {
             case JUMP_START:
-                vel.y = 5.0f;
+                if(hasOrb)
+                {                    
+                    if(orbTimeout > 0)
+                        vel.y = 10.0f;
+                    else
+                        hasOrb = false;
+                }
+                else
+                    vel.y = 5.0f;
                 break;
             case JUMPING:
                 if(vel.y == 0.0f)
@@ -236,5 +257,10 @@ public class Player extends AbstractGameObject
         
         body.setLinearVelocity(vel);
     }
-
+    
+    public void collectedOrb()
+    {
+        hasOrb = true;
+        orbTimeout = Constants.ORB_TIMEOUT;
+    }
 }
