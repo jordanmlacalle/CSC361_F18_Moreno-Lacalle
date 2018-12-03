@@ -7,9 +7,12 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 import com.jordanml.game.util.Constants;
@@ -95,12 +98,27 @@ public class Assets implements Disposable, AssetErrorListener
      * Class that acts as a container for Player assets
      */
     public class AssetPlayer
-    {
-        public final AtlasRegion player;
+    {        
+        // Player animations
+        public final Animation<TextureRegion> animIdle;
+        public final Animation<TextureRegion> animRun;
+        public final Animation<TextureRegion> animJump;
         
         public AssetPlayer(TextureAtlas atlas)
         {
-            player = atlas.findRegion("jack_idle", 1);
+            Array<AtlasRegion> regions = null;
+            
+            // Idle animation
+            regions = atlas.findRegions("jack_idle");
+            animIdle = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+            
+            // Run animation
+            regions = atlas.findRegions("jack_run");
+            animRun = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+
+            // Jump animation
+            regions = atlas.findRegions("jack_jump");
+            animJump = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.NORMAL);
         }
     }
     

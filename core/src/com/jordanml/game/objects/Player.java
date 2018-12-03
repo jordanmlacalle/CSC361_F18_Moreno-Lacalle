@@ -2,6 +2,7 @@ package com.jordanml.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -36,13 +37,18 @@ public class Player extends AbstractGameObject
     enum JUMP_STATE
     {
         JUMP_START,
+        JUMPING,
         GROUNDED;
     }
+    
+    // Player animations
+    private Animation<TextureRegion> animIdle;
+    private Animation<TextureRegion> animRun;
+    private Animation<TextureRegion> animJump;
     
     private VIEW_DIRECTION viewDirection;
     private MOVE_STATE moveState;
     private JUMP_STATE jumpState;
-    private TextureRegion player;
     
     public Player()
     {
@@ -54,8 +60,10 @@ public class Player extends AbstractGameObject
      */
     private void init()
     {
-        // Until animation is added, Player sprite is a still image
-        player = Assets.instance.player.player;
+        // Init animations
+        animIdle = Assets.instance.player.animIdle;
+        animRun = Assets.instance.player.animRun;
+        animJump = Assets.instance.player.animJump;
         
         // Set Player dimensions
         dimension.set(1, 1);        
@@ -121,6 +129,27 @@ public class Player extends AbstractGameObject
         
         // Update velocity
         step();
+        
+        // Player just jumped
+        if(jumpState == JUMP_STATE.JUMP_START)
+        {
+            setAnimation(animJump);
+            jumpState = JUMP_STATE.JUMPING;
+        }
+        
+        if(animation == animJump)
+        {
+            if(animation.isAnimationFinished(stateTime))
+                animation = animRun;
+        }
+        
+        if(jumpState == JUMP_STATE.GROUNDED)
+        {
+            if(moveState != MOVE_STATE.STOPPED)
+                animation = animRun;
+            else
+                animation = animIdle;
+        }
     }
     
     /**
@@ -132,15 +161,15 @@ public class Player extends AbstractGameObject
     public void render(SpriteBatch batch)
     {
         TextureRegion reg = null;
-        
-        reg = player;
-        
+                
         boolean flip = false;
         
         if(viewDirection == VIEW_DIRECTION.LEFT)
         {
             flip = true;
         }
+        
+        reg = animation.getKeyFrame(stateTime, true);
         
         batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y,
                 scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
@@ -197,8 +226,10 @@ public class Player extends AbstractGameObject
         {
             case JUMP_START:
                 vel.y = 5.0f;
-                jumpState = JUMP_STATE.GROUNDED;
                 break;
+            case JUMPING:
+                if(vel.y == 0.0f)
+                    jumpState = JUMP_STATE.GROUNDED;
             case GROUNDED:
                 break;
         }
