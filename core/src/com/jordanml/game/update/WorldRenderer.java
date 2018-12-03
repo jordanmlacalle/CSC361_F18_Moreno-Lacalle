@@ -1,9 +1,11 @@
 package com.jordanml.game.update;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 
 import com.jordanml.game.assets.Assets;
@@ -95,6 +97,7 @@ public class WorldRenderer implements Disposable
         
         renderGuiLives(batch);
         renderGuiScore(batch);
+        renderGuiGameOverMessage(batch);
         batch.end();
     }
     
@@ -137,6 +140,24 @@ public class WorldRenderer implements Disposable
         {
             batch.draw(Assets.instance.gui.pumpkin, x + i * 50, y, 50, 50, 120, 100, 0.35f, -0.35f, 0);
             batch.setColor(1, 1, 1, 1);
+        }
+    }
+    
+    /**
+     * Renders the "Game Over" message that is displayed when the player runs out of lives
+     * 
+     * @param batch SpriteBatch used to draw "Game Over" message
+     */
+    private void renderGuiGameOverMessage(SpriteBatch batch)
+    {
+        float x = cameraGui.viewportWidth / 2;
+        float y = cameraGui.viewportHeight / 2;
+        if (worldController.isGameOver())
+        {
+            BitmapFont fontGameOver = Assets.instance.fonts.defaultBig;
+            fontGameOver.setColor(1, 0.75f, 0.25f, 1);
+            fontGameOver.draw(batch, "GAME OVER", x, y, 0, Align.center, false);
+            fontGameOver.setColor(1, 1, 1, 1);
         }
     }
     
