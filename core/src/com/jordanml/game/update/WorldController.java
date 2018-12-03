@@ -18,6 +18,7 @@ import com.jordanml.game.level.Level;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Candycorn;
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
 import com.jordanml.game.util.Constants;
 import com.jordanml.game.util.CameraHelper;
@@ -53,7 +54,6 @@ public class WorldController extends InputAdapter
         score = 0;
         lives = Constants.MAX_LIVES;
         initLevel();
-        initPhysics();
     }
     
     /**
@@ -69,6 +69,11 @@ public class WorldController extends InputAdapter
         for(Candycorn candycorn : level.candycorns)
         {
             candycorn.initPhysics(world);
+        }
+        
+        for(Orb orb : level.orbs)
+        {
+            orb.initPhysics(world);
         }
         
         for(Land land : level.lands)
@@ -110,6 +115,18 @@ public class WorldController extends InputAdapter
                                                     score += Constants.CANDYCORN_SCORE;
                                                 }
                                             }
+                                            else if(object.getBody().getUserData() instanceof Orb)
+                                            {
+                                                Gdx.app.debug(TAG, " Player <-> Orb");
+                                                
+                                                Orb orb = (Orb) object.getBody().getUserData();
+                                                
+                                                if(!orb.collected)
+                                                {
+                                                    orb.collected = true;
+                                                    score += Constants.ORB_SCORE;
+                                                }
+                                            }
                                         }
                                         
                                         
@@ -141,6 +158,7 @@ public class WorldController extends InputAdapter
     {
         level = new Level(Constants.LEVEL_01);
         cameraHelper.setTarget(level.player);
+        initPhysics();
     }
     
     /**
@@ -155,15 +173,14 @@ public class WorldController extends InputAdapter
         level.update(deltaTime);
         world.step(deltaTime, 8, 3);
         
+        cameraHelper.update(deltaTime);
+        
         if(level.player.position.y < -5)
         {
             // Play life lost sound ?
             lives--;
             initLevel();
-            initPhysics();
         }
-        
-        cameraHelper.update(deltaTime);
     }
 
     /**
@@ -182,8 +199,17 @@ public class WorldController extends InputAdapter
         // Toggle camera follow
         else if (keycode == Keys.ENTER)
         {
-            cameraHelper.setTarget(null);
-            Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+            if(cameraHelper.hasTarget())
+            {
+                cameraHelper.setTarget(null);
+                Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+            }
+            else
+            {
+                cameraHelper.setTarget(level.player);
+                cameraHelper.setZoom(1.0f);
+                Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+            }
         }
         
         return false;
