@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.jordanml.game.assets.Assets;
+import com.jordanml.game.util.AudioManager;
 import com.jordanml.game.util.Constants;
 
 public class Player extends AbstractGameObject
@@ -238,6 +239,7 @@ public class Player extends AbstractGameObject
         switch(jumpState)
         {
             case JUMP_START:
+                AudioManager.instance.play(Assets.instance.sound.jump);
                 if(hasOrb)
                 {                    
                     if(orbTimeout > 0)
