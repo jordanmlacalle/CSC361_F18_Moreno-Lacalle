@@ -15,6 +15,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.jordanml.game.assets.Assets;
 import com.jordanml.game.level.Level;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Candycorn;
@@ -23,6 +24,7 @@ import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
 import com.jordanml.game.screens.MenuScreen;
 import com.jordanml.game.util.Constants;
+import com.jordanml.game.util.AudioManager;
 import com.jordanml.game.util.CameraHelper;
 
 /**
@@ -121,6 +123,7 @@ public class WorldController extends InputAdapter
                                                     score += Constants.CANDYCORN_SCORE;
                                                 }
                                             }
+                                            // Check for contact between player and Orb
                                             else if(object.getBody().getUserData() instanceof Orb)
                                             {
                                                 Gdx.app.debug(TAG, " Player <-> Orb");
@@ -132,6 +135,7 @@ public class WorldController extends InputAdapter
                                                     orb.collected = true;
                                                     score += Constants.ORB_SCORE;
                                                     level.player.collectedOrb();
+                                                    AudioManager.instance.play(Assets.instance.sound.powerup);
                                                 }
                                             }
                                         }

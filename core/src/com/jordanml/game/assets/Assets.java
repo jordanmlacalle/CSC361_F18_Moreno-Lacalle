@@ -53,6 +53,7 @@ public class Assets implements Disposable, AssetErrorListener
         assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
         assetManager.load("music/menu_song.mp3", Music.class);
         assetManager.load("sounds/jump.ogg", Sound.class);
+        assetManager.load("sounds/powerup.wav", Sound.class);
         assetManager.finishLoading();
 
         Gdx.app.debug(TAG, "# of assets loaded: " + assetManager.getAssetNames().size);
@@ -192,10 +193,12 @@ public class Assets implements Disposable, AssetErrorListener
     public class AssetSound
     {
         public final Sound jump;
+        public final Sound powerup;
         
         public AssetSound(AssetManager am)
         {
             jump = am.get("sounds/jump.ogg", Sound.class);
+            powerup = am.get("sounds/powerup.wav", Sound.class);
         }
     }
     
