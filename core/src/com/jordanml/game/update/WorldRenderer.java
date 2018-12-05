@@ -24,7 +24,7 @@ public class WorldRenderer implements Disposable
     private SpriteBatch batch;
     private WorldController worldController;
 
-    private final boolean BOX2D_DEBUG = true;
+    private final boolean BOX2D_DEBUG = false;
     private Box2DDebugRenderer b2Debug;
     
     // TODO: Will need a camera for GUI down the line

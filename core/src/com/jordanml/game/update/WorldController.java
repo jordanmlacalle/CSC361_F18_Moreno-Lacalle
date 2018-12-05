@@ -19,6 +19,7 @@ import com.jordanml.game.assets.Assets;
 import com.jordanml.game.level.Level;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Candycorn;
+import com.jordanml.game.objects.Goal;
 import com.jordanml.game.objects.Land;
 import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
@@ -90,6 +91,7 @@ public class WorldController extends InputAdapter
         }
         
         level.player.initPhysics(world);
+        level.goal.initPhysics(world);
         
         world.setContactListener(new ContactListener()
                                 {
@@ -136,6 +138,19 @@ public class WorldController extends InputAdapter
                                                     score += Constants.ORB_SCORE;
                                                     level.player.collectedOrb();
                                                     AudioManager.instance.play(Assets.instance.sound.powerup);
+                                                }
+                                            }
+                                            // Check for contact between player and Goal
+                                            else if(object.getBody().getUserData() instanceof Goal)
+                                            {
+                                                Gdx.app.debug(TAG, " Player <-> Goal");
+                                                
+                                                Goal goal = (Goal) object.getBody().getUserData();
+                                                
+                                                if(!goal.reached)
+                                                {
+                                                    goal.onPlayerReached();
+                                                    score += Constants.GOAL_REACHED;
                                                 }
                                             }
                                         }
