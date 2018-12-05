@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,6 +34,7 @@ public class Assets implements Disposable, AssetErrorListener
     public AssetPlayer player;
     public AssetGui gui;
     public AssetMusic music;
+    public AssetSound sound;
     public AssetFonts fonts;
     public AssetCandy candy;
     public AssetOrb orb;
@@ -50,6 +52,7 @@ public class Assets implements Disposable, AssetErrorListener
         // load texture atlas
         assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
         assetManager.load("music/menu_song.mp3", Music.class);
+        assetManager.load("sounds/jump.ogg", Sound.class);
         assetManager.finishLoading();
 
         Gdx.app.debug(TAG, "# of assets loaded: " + assetManager.getAssetNames().size);
@@ -73,6 +76,7 @@ public class Assets implements Disposable, AssetErrorListener
         player = new AssetPlayer(atlas);
         gui = new AssetGui(atlas);
         music = new AssetMusic(assetManager);
+        sound = new AssetSound(assetManager);
         candy = new AssetCandy(atlas);
         orb = new AssetOrb(atlas);
         fonts = new AssetFonts();
@@ -179,6 +183,19 @@ public class Assets implements Disposable, AssetErrorListener
         public AssetMusic(AssetManager am)
         {
             menu = am.get("music/menu_song.mp3", Music.class);
+        }
+    }
+    
+    /**
+     * Class that acts as a container for Sound assets
+     */
+    public class AssetSound
+    {
+        public final Sound jump;
+        
+        public AssetSound(AssetManager am)
+        {
+            jump = am.get("sounds/jump.ogg", Sound.class);
         }
     }
     

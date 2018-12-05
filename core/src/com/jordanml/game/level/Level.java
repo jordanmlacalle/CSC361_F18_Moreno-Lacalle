@@ -144,7 +144,6 @@ public class Level
                 else if(BLOCK_TYPE.CANDY_CORN.sameColor(currentPixel))
                 {
                     obj = new Candycorn();
-                    //offsetHeight = 2.5f;
                     obj.position.set(pixelX, baseHeight + offsetHeight);
                     candycorns.add((Candycorn) obj);
                 }
