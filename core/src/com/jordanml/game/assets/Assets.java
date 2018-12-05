@@ -38,6 +38,7 @@ public class Assets implements Disposable, AssetErrorListener
     public AssetFonts fonts;
     public AssetCandy candy;
     public AssetOrb orb;
+    public AssetGoal goal;
     
     // Singleton
     private Assets()
@@ -52,6 +53,7 @@ public class Assets implements Disposable, AssetErrorListener
         // load texture atlas
         assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
         assetManager.load("music/menu_song.mp3", Music.class);
+        assetManager.load("music/creep.wav", Music.class);
         assetManager.load("sounds/jump.ogg", Sound.class);
         assetManager.load("sounds/powerup.wav", Sound.class);
         assetManager.finishLoading();
@@ -80,6 +82,7 @@ public class Assets implements Disposable, AssetErrorListener
         sound = new AssetSound(assetManager);
         candy = new AssetCandy(atlas);
         orb = new AssetOrb(atlas);
+        goal = new AssetGoal(atlas);
         fonts = new AssetFonts();
     }
     
@@ -180,10 +183,12 @@ public class Assets implements Disposable, AssetErrorListener
     public class AssetMusic
     {
         public final Music menu;
+        public final Music game;
         
         public AssetMusic(AssetManager am)
         {
             menu = am.get("music/menu_song.mp3", Music.class);
+            game = am.get("music/creep.wav", Music.class);
         }
     }
     
@@ -216,7 +221,7 @@ public class Assets implements Disposable, AssetErrorListener
     }
     
     /**
-     * Class that acts as a container or Orb assets
+     * Class that acts as a container for Orb assets
      */
     public class AssetOrb
     {
@@ -230,6 +235,27 @@ public class Assets implements Disposable, AssetErrorListener
             animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
         }
     }
+    
+    /**
+     * Class that acts as a container for Goal assets
+     */
+    public class AssetGoal
+    {
+        public final Animation<TextureRegion> animNormal;
+        public final Animation<TextureRegion> animExplode;
+        
+        public AssetGoal(TextureAtlas atlas)
+        {
+            Array<AtlasRegion> regions = null;
+            
+            regions = atlas.findRegions("lollipop");
+            animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+            
+            regions = atlas.findRegions("explosionred");
+            animExplode = new Animation<TextureRegion>(1.0f / 5.0f, regions, Animation.PlayMode.NORMAL);
+        }
+    }
+    
     /**
      * Gathers fonts to be used for text necessary to provide the user information while playing
      * the game.

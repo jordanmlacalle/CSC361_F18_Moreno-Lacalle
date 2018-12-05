@@ -1,5 +1,6 @@
 package com.jordanml.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,31 +11,34 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.jordanml.game.assets.Assets;
 
-public class Candycorn extends AbstractGameObject
+public class Goal extends AbstractGameObject
 {
 
-    private TextureRegion regCorn;
-    public boolean collected;
+    private Animation<TextureRegion> animNormal;
+    private Animation<TextureRegion> animExplode;
     
-    public Candycorn()
+    public boolean reached = false;
+    
+    public Goal()
     {
         init();
     }
     
     /**
-     * Initialize basic properties and assets for Candycorn
+     * Initialize animations, dimenisons, and bounds for the Goal
      */
     private void init()
     {
-        collected = false;
-        dimension.set(0.5f, 0.5f);
+        animNormal = Assets.instance.goal.animNormal;
+        animExplode = Assets.instance.goal.animExplode;
+        dimension.set(1.0f, 1.0f);
         bounds.set(0, 0, dimension.x, dimension.y);
-        regCorn = Assets.instance.candy.candycorn;
+        setAnimation(animNormal);
     }
     
     /**
-     * Initializes the physics body for the Candycorn and adds it to the given world
-     * @param world the box2d world to add the body to
+     * Initializes the box2d physics body for the Goal and adds it to the given world
+     * @param world The box2d world to add the body to
      */
     public void initPhysics(World world)
     {
@@ -60,15 +64,10 @@ public class Candycorn extends AbstractGameObject
     
     @Override
     public void render(SpriteBatch batch)
-    {
-        if(collected)
-        {
-            return;
-        }
-        
+    {   
         TextureRegion reg = null;
-        
-        reg = regCorn;
+                
+        reg = animation.getKeyFrame(stateTime);
         
         batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y,
                 scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
@@ -78,6 +77,15 @@ public class Candycorn extends AbstractGameObject
     @Override
     public void update(float deltaTime)
     {
-        super.update(deltaTime);        
+        super.update(deltaTime); 
+    }
+    
+    /**
+     * To be called when the player reaches the goal. Triggers the explosion animation.
+     */
+    public void onPlayerReached()
+    {
+        reached = true;
+        setAnimation(animExplode);
     }
 }

@@ -11,6 +11,7 @@ import com.jordanml.game.objects.Player;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Background;
 import com.jordanml.game.objects.Candycorn;
+import com.jordanml.game.objects.Goal;
 
 public class Level
 {
@@ -22,6 +23,7 @@ public class Level
     public Array<Orb> orbs;
     public Background background;
     public Player player;
+    public Goal goal;
     
     public enum BLOCK_TYPE
     {
@@ -159,6 +161,12 @@ public class Level
                     obj.position.set(pixelX, baseHeight + offsetHeight);
                     orbs.add((Orb) obj);
                 }
+                else if(BLOCK_TYPE.GOAL.sameColor(currentPixel))
+                {
+                    obj = new Goal();
+                    obj.position.set(pixelX, baseHeight + offsetHeight);
+                    goal = (Goal) obj;
+                }
                 else
                 {
                     // decode currentPixel color
@@ -206,6 +214,7 @@ public class Level
             orb.update(deltaTime);
         }
         player.update(deltaTime);
+        goal.update(deltaTime);
     }
     
     /**
@@ -232,6 +241,7 @@ public class Level
             orb.render(batch);
         }
         
+        goal.render(batch);
         player.render(batch);
     }
 }

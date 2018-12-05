@@ -6,49 +6,56 @@ filter: Nearest,Nearest
 repeat: none
 candycorn
   rotate: false
-  xy: 724, 122
+  xy: 852, 2
   size: 64, 80
   orig: 64, 80
   offset: 0, 0
   index: -1
 jack_dead
   rotate: false
-  xy: 2, 204
+  xy: 2, 214
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
   index: 1
 land_edge_float
   rotate: false
-  xy: 204, 74
+  xy: 852, 84
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-land_edge_norm
+lollipop
   rotate: false
-  xy: 334, 74
-  size: 128, 128
-  orig: 128, 128
+  xy: 204, 52
+  size: 160, 160
+  orig: 160, 160
   offset: 0, 0
-  index: -1
-land_middle_float
+  index: 1
+lollipop
   rotate: false
-  xy: 464, 74
-  size: 128, 128
-  orig: 128, 128
+  xy: 366, 52
+  size: 160, 160
+  orig: 160, 160
   offset: 0, 0
-  index: -1
-land_middle_norm
+  index: 2
+lollipop
   rotate: false
-  xy: 594, 74
-  size: 128, 128
-  orig: 128, 128
+  xy: 528, 52
+  size: 160, 160
+  orig: 160, 160
   offset: 0, 0
-  index: -1
+  index: 3
+lollipop
+  rotate: false
+  xy: 690, 52
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: 4
 pumpkin
   rotate: false
-  xy: 2, 2
+  xy: 2, 12
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
@@ -61,24 +68,101 @@ filter: Nearest,Nearest
 repeat: none
 jack_dead
   rotate: false
-  xy: 2, 2
+  xy: 2, 132
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
   index: 2
+land_edge_norm
+  rotate: false
+  xy: 2, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+land_middle_float
+  rotate: false
+  xy: 132, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+land_middle_norm
+  rotate: false
+  xy: 262, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 
 damned3.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-jack_dead
+explosionred
   rotate: false
   xy: 2, 2
-  size: 986, 796
-  orig: 986, 796
+  size: 328, 328
+  orig: 328, 328
+  offset: 0, 0
+  index: 1
+explosionred
+  rotate: false
+  xy: 332, 2
+  size: 328, 328
+  orig: 328, 328
+  offset: 0, 0
+  index: 2
+explosionred
+  rotate: false
+  xy: 662, 2
+  size: 328, 328
+  orig: 328, 328
   offset: 0, 0
   index: 3
+powerup
+  rotate: false
+  xy: 2, 652
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 1
+powerup
+  rotate: false
+  xy: 322, 652
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 2
+powerup
+  rotate: false
+  xy: 642, 652
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 3
+powerup
+  rotate: false
+  xy: 2, 332
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 4
+powerup
+  rotate: false
+  xy: 322, 332
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 5
+powerup
+  rotate: false
+  xy: 642, 332
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: 6
 
 damned4.png
 size: 1024,1024
@@ -91,7 +175,7 @@ jack_dead
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
-  index: 4
+  index: 3
 
 damned5.png
 size: 1024,1024
@@ -104,7 +188,7 @@ jack_dead
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
-  index: 5
+  index: 4
 
 damned6.png
 size: 1024,1024
@@ -117,7 +201,7 @@ jack_dead
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
-  index: 6
+  index: 5
 
 damned7.png
 size: 1024,1024
@@ -130,7 +214,7 @@ jack_dead
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
-  index: 7
+  index: 6
 
 damned8.png
 size: 1024,1024
@@ -143,7 +227,7 @@ jack_dead
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
-  index: 8
+  index: 7
 
 damned9.png
 size: 1024,1024
@@ -156,6 +240,19 @@ jack_dead
   size: 986, 796
   orig: 986, 796
   offset: 0, 0
+  index: 8
+
+damned10.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_dead
+  rotate: false
+  xy: 2, 2
+  size: 986, 796
+  orig: 986, 796
+  offset: 0, 0
   index: 9
 jack_dead
   rotate: false
@@ -165,73 +262,32 @@ jack_dead
   offset: 0, 0
   index: 10
 
-damned10.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-jack_idle
-  rotate: false
-  xy: 2, 197
-  size: 579, 763
-  orig: 579, 763
-  offset: 0, 0
-  index: 1
-powerup
-  rotate: false
-  xy: 583, 642
-  size: 318, 318
-  orig: 318, 318
-  offset: 0, 0
-  index: 1
-powerup
-  rotate: false
-  xy: 583, 322
-  size: 318, 318
-  orig: 318, 318
-  offset: 0, 0
-  index: 2
-powerup
-  rotate: false
-  xy: 583, 2
-  size: 318, 318
-  orig: 318, 318
-  offset: 0, 0
-  index: 3
-
 damned11.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+explosionred
+  rotate: false
+  xy: 583, 437
+  size: 328, 328
+  orig: 328, 328
+  offset: 0, 0
+  index: 4
+explosionred
+  rotate: false
+  xy: 583, 107
+  size: 328, 328
+  orig: 328, 328
+  offset: 0, 0
+  index: 5
 jack_idle
   rotate: false
-  xy: 2, 197
+  xy: 2, 2
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 2
-powerup
-  rotate: false
-  xy: 583, 642
-  size: 318, 318
-  orig: 318, 318
-  offset: 0, 0
-  index: 4
-powerup
-  rotate: false
-  xy: 583, 322
-  size: 318, 318
-  orig: 318, 318
-  offset: 0, 0
-  index: 5
-powerup
-  rotate: false
-  xy: 583, 2
-  size: 318, 318
-  orig: 318, 318
-  offset: 0, 0
-  index: 6
+  index: 1
 
 damned12.png
 size: 1024,1024
@@ -244,7 +300,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 3
+  index: 2
 
 damned13.png
 size: 1024,1024
@@ -257,7 +313,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 4
+  index: 3
 
 damned14.png
 size: 1024,1024
@@ -270,7 +326,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 5
+  index: 4
 
 damned15.png
 size: 1024,1024
@@ -283,7 +339,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 6
+  index: 5
 
 damned16.png
 size: 1024,1024
@@ -296,7 +352,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 7
+  index: 6
 
 damned17.png
 size: 1024,1024
@@ -309,7 +365,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 8
+  index: 7
 
 damned18.png
 size: 1024,1024
@@ -322,7 +378,7 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 9
+  index: 8
 
 damned19.png
 size: 1024,1024
@@ -335,20 +391,20 @@ jack_idle
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 10
+  index: 9
 
 damned20.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-jack_jump
+jack_idle
   rotate: false
   xy: 2, 2
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 1
+  index: 10
 
 damned21.png
 size: 1024,1024
@@ -361,7 +417,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 2
+  index: 1
 
 damned22.png
 size: 1024,1024
@@ -374,7 +430,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 3
+  index: 2
 
 damned23.png
 size: 1024,1024
@@ -387,7 +443,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 4
+  index: 3
 
 damned24.png
 size: 1024,1024
@@ -400,7 +456,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 5
+  index: 4
 
 damned25.png
 size: 1024,1024
@@ -413,7 +469,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 6
+  index: 5
 
 damned26.png
 size: 1024,1024
@@ -426,7 +482,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 7
+  index: 6
 
 damned27.png
 size: 1024,1024
@@ -439,7 +495,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 8
+  index: 7
 
 damned28.png
 size: 1024,1024
@@ -452,7 +508,7 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 9
+  index: 8
 
 damned29.png
 size: 1024,1024
@@ -465,20 +521,20 @@ jack_jump
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 10
+  index: 9
 
 damned30.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-jack_run
+jack_jump
   rotate: false
   xy: 2, 2
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 1
+  index: 10
 
 damned31.png
 size: 1024,1024
@@ -491,7 +547,7 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 2
+  index: 1
 
 damned32.png
 size: 1024,1024
@@ -504,7 +560,7 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 3
+  index: 2
 
 damned33.png
 size: 1024,1024
@@ -517,7 +573,7 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 4
+  index: 3
 
 damned34.png
 size: 1024,1024
@@ -530,7 +586,7 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 5
+  index: 4
 
 damned35.png
 size: 1024,1024
@@ -543,7 +599,7 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 6
+  index: 5
 
 damned36.png
 size: 1024,1024
@@ -556,7 +612,7 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 7
+  index: 6
 
 damned37.png
 size: 1024,1024
@@ -569,20 +625,20 @@ jack_run
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 8
+  index: 7
 
 damned38.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-jack_walk
+jack_run
   rotate: false
   xy: 2, 2
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 1
+  index: 8
 
 damned39.png
 size: 1024,1024
@@ -595,7 +651,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 2
+  index: 1
 
 damned40.png
 size: 1024,1024
@@ -608,7 +664,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 3
+  index: 2
 
 damned41.png
 size: 1024,1024
@@ -621,7 +677,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 4
+  index: 3
 
 damned42.png
 size: 1024,1024
@@ -634,7 +690,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 5
+  index: 4
 
 damned43.png
 size: 1024,1024
@@ -647,7 +703,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 6
+  index: 5
 
 damned44.png
 size: 1024,1024
@@ -660,7 +716,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 7
+  index: 6
 
 damned45.png
 size: 1024,1024
@@ -673,7 +729,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 8
+  index: 7
 
 damned46.png
 size: 1024,1024
@@ -686,7 +742,7 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 9
+  index: 8
 
 damned47.png
 size: 1024,1024
@@ -699,9 +755,22 @@ jack_walk
   size: 579, 763
   orig: 579, 763
   offset: 0, 0
-  index: 10
+  index: 9
 
 damned48.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jack_walk
+  rotate: false
+  xy: 2, 2
+  size: 579, 763
+  orig: 579, 763
+  offset: 0, 0
+  index: 10
+
+damned49.png
 size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest

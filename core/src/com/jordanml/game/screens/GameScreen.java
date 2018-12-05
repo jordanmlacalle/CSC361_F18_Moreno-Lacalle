@@ -4,9 +4,11 @@ package com.jordanml.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.jordanml.game.assets.Assets;
 import com.jordanml.game.screens.AbstractScreen;
 import com.jordanml.game.update.WorldController;
 import com.jordanml.game.update.WorldRenderer;
+import com.jordanml.game.util.AudioManager;
 
 public class GameScreen extends AbstractScreen
 {
@@ -16,6 +18,7 @@ public class GameScreen extends AbstractScreen
     public GameScreen(Game game)
     {
         super(game);
+        AudioManager.instance.play(Assets.instance.music.game);
     }
     
     /**
