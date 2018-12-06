@@ -3,6 +3,7 @@ package com.jordanml.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -54,6 +55,7 @@ public class Player extends AbstractGameObject
     
     private boolean hasOrb;
     private float orbTimeout;
+    private ParticleEffect dustParticles;
     
     public Player()
     {
@@ -69,6 +71,8 @@ public class Player extends AbstractGameObject
         animIdle = Assets.instance.player.animIdle;
         animRun = Assets.instance.player.animRun;
         animJump = Assets.instance.player.animJump;
+        dustParticles = new ParticleEffect();
+        dustParticles.load(Gdx.files.internal("particles/dust.pfx"), Gdx.files.internal("particles"));
         
         // Set initial animation
         setAnimation(animIdle);
@@ -126,6 +130,7 @@ public class Player extends AbstractGameObject
     public void update(float deltaTime)
     {
         super.update(deltaTime);
+        dustParticles.update(deltaTime);
         
         if(hasOrb)
             orbTimeout -= deltaTime;
@@ -160,10 +165,19 @@ public class Player extends AbstractGameObject
         if(jumpState == JUMP_STATE.GROUNDED)
         {
             if(moveState != MOVE_STATE.STOPPED)
+            {
                 animation = animRun;
+                dustParticles.setPosition(position.x + dimension.x / 2, position.y + 0.1f);
+                dustParticles.start();
+            }
             else
+            {
                 animation = animIdle;
+                dustParticles.allowCompletion();
+            }
         }
+        else
+           dustParticles.allowCompletion();
     }
     
     /**
@@ -176,6 +190,9 @@ public class Player extends AbstractGameObject
     {
         TextureRegion reg = null;
                 
+        // Render dust particles
+        dustParticles.draw(batch);
+        
         boolean flip = false;
         
         if(viewDirection == VIEW_DIRECTION.LEFT)
@@ -260,6 +277,9 @@ public class Player extends AbstractGameObject
         body.setLinearVelocity(vel);
     }
     
+    /**
+     * Method to be called when the player collects an orb
+     */
     public void collectedOrb()
     {
         hasOrb = true;
