@@ -1,5 +1,6 @@
 package com.jordanml.game.update;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -171,8 +172,7 @@ public class WorldRenderer implements Disposable
         batch.setProjectionMatrix(cameraBg.combined);
         batch.begin();
         
-        batch.draw(Assets.instance.decorations.background, -cameraBg.viewportWidth / 2, -cameraBg.viewportHeight / 2, 0, 0, cameraBg.viewportWidth, cameraGui.viewportWidth, 1, 1, 0.0f);
-        
+        batch.draw(Assets.instance.decorations.background, Constants.BG_X, Constants.BG_Y, 0, 0, Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_HEIGHT, 1, 1, 0.0f);
         batch.end();
     }
 
