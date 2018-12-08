@@ -150,6 +150,9 @@ public class WorldController extends InputAdapter
                                                 if(!goal.reached)
                                                 {
                                                     goal.onPlayerReached();
+                                                    level.player.onGoalReached();
+                                                    level.goalReached = true;
+                                                    timeLeftGameOverDelay = Constants.GAME_OVER_DELAY;
                                                     score += Constants.GOAL_REACHED;
                                                 }
                                             }
@@ -198,13 +201,13 @@ public class WorldController extends InputAdapter
     public void update(float deltaTime)
     {
         
-        handleDebugInput(deltaTime);
+        handleInput(deltaTime);
         level.update(deltaTime);
         world.step(deltaTime, 8, 3);
         
         cameraHelper.update(deltaTime);
         
-        if(isGameOver())
+        if(isGameOver() || level.goalReached)
         {
             timeLeftGameOverDelay -= deltaTime;
             
@@ -282,12 +285,13 @@ public class WorldController extends InputAdapter
     }
 
     /**
-     * Handle debug input, allows testing during development. Enables control of
-     * primary (non-gui) camera.
+     * Handle input, allows camera testing by toggling camera target. Enables control of
+     * primary (non-gui) camera. If camera controls are not enabled (target is Player)
+     * and the goal has not been reached, then controls are handled by the Player class.
      * 
      * @param deltaTime time passed since the previous frame
      */
-    private void handleDebugInput(float deltaTime)
+    private void handleInput(float deltaTime)
     {
         if (Gdx.app.getType() != ApplicationType.Desktop)
             return;
@@ -322,7 +326,7 @@ public class WorldController extends InputAdapter
             if (Gdx.input.isKeyPressed(Keys.SLASH))
                 cameraHelper.setZoom(1);
         }
-        else
+        else if(!level.goalReached)
         {
             level.player.handleInput();
         }
