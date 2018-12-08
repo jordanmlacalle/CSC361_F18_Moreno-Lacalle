@@ -25,6 +25,8 @@ public class Level
     public Player player;
     public Goal goal;
     
+    public boolean goalReached;
+    
     public enum BLOCK_TYPE
     {
         EMPTY        (  0,   0,   0), // Black
@@ -86,6 +88,8 @@ public class Level
         orbs = new Array<Orb>();
         lands = new Array<Land>();
         background = new Background(20,15);
+        
+        goalReached = false;
         
         // Load image file that represents the level data
         Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));

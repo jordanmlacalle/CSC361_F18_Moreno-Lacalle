@@ -54,6 +54,7 @@ public class Player extends AbstractGameObject
     private JUMP_STATE jumpState;
     
     private boolean hasOrb;
+    private boolean goalReached;
     private float orbTimeout;
     private ParticleEffect dustParticles;
     
@@ -78,6 +79,7 @@ public class Player extends AbstractGameObject
         setAnimation(animIdle);
         
         hasOrb = false;
+        goalReached = false;
         
         // Set Player dimensions
         dimension.set(1, 1);        
@@ -284,5 +286,13 @@ public class Player extends AbstractGameObject
     {
         hasOrb = true;
         orbTimeout = Constants.ORB_TIMEOUT;
+    }
+    
+    /**
+     * Method to be called when the player reaches the goal. Sets goalReahed flag.
+     */
+    public void onGoalReached()
+    {
+        goalReached = true;
     }
 }
