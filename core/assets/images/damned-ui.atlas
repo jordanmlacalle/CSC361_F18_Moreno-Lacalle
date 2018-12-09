@@ -25,16 +25,23 @@ logo
   orig: 710, 599
   offset: 0, 0
   index: -1
+options
+  rotate: false
+  xy: 290, 205
+  size: 91, 93
+  orig: 91, 93
+  offset: 0, 0
+  index: -1
 play
   rotate: false
-  xy: 714, 648
+  xy: 916, 812
   size: 86, 87
   orig: 86, 87
   offset: 0, 0
   index: -1
 sign
   rotate: false
-  xy: 290, 205
+  xy: 714, 642
   size: 91, 93
   orig: 91, 93
   offset: 0, 0
