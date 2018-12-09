@@ -28,6 +28,9 @@ public class Constants
     public static final String SKIN_DAMNED_UI = "images/damned-ui.json";
     public static final String SKIN_LIBGDX_UI = "images/uiskin.json";
     
+    public static final String PREFERENCES = "/CSC361_F18_Moreno-Lacalle-core/src/com/jordanml/game/util/GamePreferences.java";
+
+    
     // Background
     public static final float BG_X = -400.0f;
     public static final float BG_Y = -240.0f;

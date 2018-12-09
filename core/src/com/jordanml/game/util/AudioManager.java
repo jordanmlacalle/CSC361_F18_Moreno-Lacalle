@@ -2,10 +2,11 @@ package com.jordanml.game.util;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.jordanml.game.util.GamePreferences;
 
 public class AudioManager
 {
-    public static final AudioManager instance = new AudioManager();
+public static final AudioManager instance = new AudioManager();
     
     // The music that is currently playing (may be stopped or paused)
     private Music playingMusic;
@@ -56,7 +57,10 @@ public class AudioManager
      */
     public void play(Sound sound, float volume, float pitch, float pan)
     {
-        sound.play(1.0f * volume, pitch, pan);
+        // Check if sound is enabled
+        if(!GamePreferences.instance.sound)
+            return;
+        sound.play(GamePreferences.instance.volSound * volume, pitch, pan);
     }
     
     /**
@@ -68,10 +72,12 @@ public class AudioManager
     {
         stopMusic();
         playingMusic = music;
-
-        music.setLooping(true);
-        music.setVolume(1.0f);
-        music.play();
+        if(GamePreferences.instance.music)
+        {
+            music.setLooping(true);
+            music.setVolume(GamePreferences.instance.volMusic);
+            music.play();
+        }
     }
     
     /**
@@ -92,11 +98,21 @@ public class AudioManager
         // Check if music has been set, return if not
         if(playingMusic == null)
             return;
-
-        // If music is not playing, start playing
-        if(!playingMusic.isPlaying())
-            playingMusic.play();
-
+        // Change music volume according to settings
+        playingMusic.setVolume(GamePreferences.instance.volMusic);
+        
+        // Check if music is enabled in settings
+        if(GamePreferences.instance.music)
+        {
+            // If music is not playing, start playing
+            if(!playingMusic.isPlaying())
+                playingMusic.play();
+        }
+        else
+        {
+            // Settings have music disabled, pause music
+            playingMusic.pause();
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.jordanml.game.assets.Assets;
 import com.jordanml.game.update.WorldController;
 import com.jordanml.game.util.Constants;
+import com.jordanml.game.util.GamePreferences;
 
 /**
  * WorldRenderer handles all rendering for game world objects, including GUI elements and level elements.
@@ -99,6 +100,10 @@ public class WorldRenderer implements Disposable
         renderGuiLives(batch);
         renderGuiScore(batch);
         renderGuiGameOverMessage(batch);
+        
+        if(GamePreferences.instance.showFpsCounter)
+            renderGuiFpsCounter(batch);
+        
         batch.end();
     }
     
@@ -160,6 +165,36 @@ public class WorldRenderer implements Disposable
             fontGameOver.draw(batch, "GAME OVER", x, y, 0, Align.center, false);
             fontGameOver.setColor(1, 1, 1, 1);
         }
+    }
+    
+    /**
+     * Renders FPS counter in bottom right of viewport
+     * 
+     * @param batch SpriteBatch used to draw FPS counter
+     */
+    private void renderGuiFpsCounter(SpriteBatch batch)
+    {
+        float x = cameraGui.viewportWidth - 55;
+        float y = cameraGui.viewportHeight - 15;
+        int fps = Gdx.graphics.getFramesPerSecond();
+        BitmapFont fpsFont = Assets.instance.fonts.defaultNormal;
+        if (fps >= 45)
+        {
+            // 45 or more FPS show up in green
+            fpsFont.setColor(0, 1, 0, 1);
+        } 
+        else if (fps >= 30)
+        {
+            // 30 or more FPS show up in yellow
+            fpsFont.setColor(1, 1, 0, 1);
+        } 
+        else
+        {
+            // less than 30 FPS show up in red
+            fpsFont.setColor(1, 0, 0, 1);
+        }
+        fpsFont.draw(batch, "FPS: " + fps, x, y);
+        fpsFont.setColor(1, 1, 1, 1); // white
     }
     
     /**
