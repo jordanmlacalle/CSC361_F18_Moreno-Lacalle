@@ -28,8 +28,15 @@ public class Constants
     public static final String SKIN_DAMNED_UI = "images/damned-ui.json";
     public static final String SKIN_LIBGDX_UI = "images/uiskin.json";
     
+    // Background
+    public static final float BG_X = -400.0f;
+    public static final float BG_Y = -240.0f;
+    
     // Level constants
     public static final int MAX_LIVES = 3;
     public static final int CANDYCORN_SCORE = 50;
-    
+    public static final int ORB_SCORE = 100;
+    public static final int ORB_TIMEOUT = 10;
+    public static final int GAME_OVER_DELAY = 5;
+    public static final int GOAL_REACHED = 400;
 }

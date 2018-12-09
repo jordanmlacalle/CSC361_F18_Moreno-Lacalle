@@ -21,6 +21,9 @@ public class Candycorn extends AbstractGameObject
         init();
     }
     
+    /**
+     * Initialize basic properties and assets for Candycorn
+     */
     private void init()
     {
         collected = false;
@@ -29,6 +32,10 @@ public class Candycorn extends AbstractGameObject
         regCorn = Assets.instance.candy.candycorn;
     }
     
+    /**
+     * Initializes the physics body for the Candycorn and adds it to the given world
+     * @param world the box2d world to add the body to
+     */
     public void initPhysics(World world)
     {
         // Create new body for Candycorn

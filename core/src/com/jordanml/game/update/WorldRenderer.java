@@ -1,9 +1,12 @@
 package com.jordanml.game.update;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 
 import com.jordanml.game.assets.Assets;
@@ -22,7 +25,7 @@ public class WorldRenderer implements Disposable
     private SpriteBatch batch;
     private WorldController worldController;
 
-    // TODO: Remove box2DDebugDraw
+    private final boolean BOX2D_DEBUG = false;
     private Box2DDebugRenderer b2Debug;
     
     // TODO: Will need a camera for GUI down the line
@@ -54,7 +57,6 @@ public class WorldRenderer implements Disposable
         //cameraBg.setToOrtho(true);
         cameraBg.update();
         
-        //TODO: remove b2Debug
         b2Debug = new Box2DDebugRenderer();
     }
 
@@ -67,7 +69,8 @@ public class WorldRenderer implements Disposable
         renderWorld(batch);
         renderGui(batch);
         // TODO: remove b2Debug.render() call
-        b2Debug.render(worldController.world, camera.combined);
+        if(BOX2D_DEBUG)
+            b2Debug.render(worldController.world, camera.combined);
     }
 
     /**
@@ -95,6 +98,7 @@ public class WorldRenderer implements Disposable
         
         renderGuiLives(batch);
         renderGuiScore(batch);
+        renderGuiGameOverMessage(batch);
         batch.end();
     }
     
@@ -141,6 +145,24 @@ public class WorldRenderer implements Disposable
     }
     
     /**
+     * Renders the "Game Over" message that is displayed when the player runs out of lives
+     * 
+     * @param batch SpriteBatch used to draw "Game Over" message
+     */
+    private void renderGuiGameOverMessage(SpriteBatch batch)
+    {
+        float x = cameraGui.viewportWidth / 2;
+        float y = cameraGui.viewportHeight / 2;
+        if (worldController.isGameOver())
+        {
+            BitmapFont fontGameOver = Assets.instance.fonts.defaultBig;
+            fontGameOver.setColor(1, 0.75f, 0.25f, 1);
+            fontGameOver.draw(batch, "GAME OVER", x, y, 0, Align.center, false);
+            fontGameOver.setColor(1, 1, 1, 1);
+        }
+    }
+    
+    /**
      * Renders the background
      * 
      * @param batch SpriteBatch used to render the background
@@ -150,8 +172,7 @@ public class WorldRenderer implements Disposable
         batch.setProjectionMatrix(cameraBg.combined);
         batch.begin();
         
-        batch.draw(Assets.instance.decorations.background, -cameraBg.viewportWidth / 2, -cameraBg.viewportHeight / 2, 0, 0, cameraBg.viewportWidth, cameraGui.viewportWidth, 1, 1, 0.0f);
-        
+        batch.draw(Assets.instance.decorations.background, Constants.BG_X, Constants.BG_Y, 0, 0, Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_HEIGHT, 1, 1, 0.0f);
         batch.end();
     }
 

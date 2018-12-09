@@ -5,11 +5,15 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 import com.jordanml.game.util.Constants;
@@ -28,10 +32,14 @@ public class Assets implements Disposable, AssetErrorListener
     public AssetLand land;
     public AssetDecorations decorations;
     public AssetPlayer player;
+    public AssetBat bat;
     public AssetGui gui;
     public AssetMusic music;
+    public AssetSound sound;
     public AssetFonts fonts;
     public AssetCandy candy;
+    public AssetOrb orb;
+    public AssetGoal goal;
     
     // Singleton
     private Assets()
@@ -46,6 +54,9 @@ public class Assets implements Disposable, AssetErrorListener
         // load texture atlas
         assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
         assetManager.load("music/menu_song.mp3", Music.class);
+        assetManager.load("music/creep.wav", Music.class);
+        assetManager.load("sounds/jump.ogg", Sound.class);
+        assetManager.load("sounds/powerup.wav", Sound.class);
         assetManager.finishLoading();
 
         Gdx.app.debug(TAG, "# of assets loaded: " + assetManager.getAssetNames().size);
@@ -67,9 +78,13 @@ public class Assets implements Disposable, AssetErrorListener
         land = new AssetLand(atlas);
         decorations = new AssetDecorations(atlas);
         player = new AssetPlayer(atlas);
+        bat = new AssetBat(atlas);
         gui = new AssetGui(atlas);
         music = new AssetMusic(assetManager);
+        sound = new AssetSound(assetManager);
         candy = new AssetCandy(atlas);
+        orb = new AssetOrb(atlas);
+        goal = new AssetGoal(atlas);
         fonts = new AssetFonts();
     }
     
@@ -95,15 +110,46 @@ public class Assets implements Disposable, AssetErrorListener
      * Class that acts as a container for Player assets
      */
     public class AssetPlayer
-    {
-        public final AtlasRegion player;
+    {        
+        // Player animations
+        public final Animation<TextureRegion> animIdle;
+        public final Animation<TextureRegion> animRun;
+        public final Animation<TextureRegion> animJump;
         
         public AssetPlayer(TextureAtlas atlas)
         {
-            player = atlas.findRegion("jack_idle", 1);
+            Array<AtlasRegion> regions = null;
+            
+            // Idle animation
+            regions = atlas.findRegions("jack_idle");
+            animIdle = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+            
+            // Run animation
+            regions = atlas.findRegions("jack_run");
+            animRun = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+
+            // Jump animation
+            regions = atlas.findRegions("jack_jump");
+            animJump = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.NORMAL);
         }
     }
     
+    /**
+     * Class that acts as a container for Bat assets
+     */
+    public class AssetBat
+    {
+        public final Animation<TextureRegion> animNormal;
+        
+        public AssetBat(TextureAtlas atlas)
+        {
+            Array<AtlasRegion> regions = null;
+            
+            // Normal animation
+            regions = atlas.findRegions("bat");
+            animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+        }
+    }
     /**
      * Class that acts as a container for Land assets
      */
@@ -155,13 +201,33 @@ public class Assets implements Disposable, AssetErrorListener
     public class AssetMusic
     {
         public final Music menu;
+        public final Music game;
         
         public AssetMusic(AssetManager am)
         {
             menu = am.get("music/menu_song.mp3", Music.class);
+            game = am.get("music/creep.wav", Music.class);
         }
     }
     
+    /**
+     * Class that acts as a container for Sound assets
+     */
+    public class AssetSound
+    {
+        public final Sound jump;
+        public final Sound powerup;
+        
+        public AssetSound(AssetManager am)
+        {
+            jump = am.get("sounds/jump.ogg", Sound.class);
+            powerup = am.get("sounds/powerup.wav", Sound.class);
+        }
+    }
+    
+    /**
+     * Class that acts as a container for Candy collectible assets
+     */
     public class AssetCandy
     {
         public final AtlasRegion candycorn;
@@ -171,6 +237,43 @@ public class Assets implements Disposable, AssetErrorListener
             candycorn = atlas.findRegion("candycorn");
         }
     }
+    
+    /**
+     * Class that acts as a container for Orb assets
+     */
+    public class AssetOrb
+    {
+        public final Animation<TextureRegion> animNormal;
+        
+        public AssetOrb(TextureAtlas atlas)
+        {
+            Array<AtlasRegion> regions = null;
+            
+            regions = atlas.findRegions("powerup");
+            animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+        }
+    }
+    
+    /**
+     * Class that acts as a container for Goal assets
+     */
+    public class AssetGoal
+    {
+        public final Animation<TextureRegion> animNormal;
+        public final Animation<TextureRegion> animExplode;
+        
+        public AssetGoal(TextureAtlas atlas)
+        {
+            Array<AtlasRegion> regions = null;
+            
+            regions = atlas.findRegions("lollipop");
+            animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+            
+            regions = atlas.findRegions("explosionred");
+            animExplode = new Animation<TextureRegion>(1.0f / 5.0f, regions, Animation.PlayMode.NORMAL);
+        }
+    }
+    
     /**
      * Gathers fonts to be used for text necessary to provide the user information while playing
      * the game.

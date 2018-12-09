@@ -10,16 +10,22 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.jordanml.game.assets.Assets;
 import com.jordanml.game.level.Level;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Candycorn;
+import com.jordanml.game.objects.Goal;
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
+import com.jordanml.game.screens.MenuScreen;
 import com.jordanml.game.util.Constants;
+import com.jordanml.game.util.AudioManager;
 import com.jordanml.game.util.CameraHelper;
 
 /**
@@ -36,9 +42,13 @@ public class WorldController extends InputAdapter
     
     public int lives;
     public int score;
-        
-    public WorldController()
+    
+    private Game game;
+    private float timeLeftGameOverDelay;
+    
+    public WorldController(Game game)
     {
+        this.game = game;
         init();
     }
     
@@ -53,7 +63,6 @@ public class WorldController extends InputAdapter
         score = 0;
         lives = Constants.MAX_LIVES;
         initLevel();
-        initPhysics();
     }
     
     /**
@@ -71,12 +80,20 @@ public class WorldController extends InputAdapter
             candycorn.initPhysics(world);
         }
         
+        for(Orb orb : level.orbs)
+        {
+            orb.initPhysics(world);
+        }
+        
         for(Land land : level.lands)
         {
             land.initPhysics(world);
         }
         
         level.player.initPhysics(world);
+        level.bats.initPhysics(world);
+        level.bats.init();
+        level.goal.initPhysics(world);
         
         world.setContactListener(new ContactListener()
                                 {
@@ -110,6 +127,37 @@ public class WorldController extends InputAdapter
                                                     score += Constants.CANDYCORN_SCORE;
                                                 }
                                             }
+                                            // Check for contact between player and Orb
+                                            else if(object.getBody().getUserData() instanceof Orb)
+                                            {
+                                                Gdx.app.debug(TAG, " Player <-> Orb");
+                                                
+                                                Orb orb = (Orb) object.getBody().getUserData();
+                                                
+                                                if(!orb.collected)
+                                                {
+                                                    orb.collected = true;
+                                                    score += Constants.ORB_SCORE;
+                                                    level.player.collectedOrb();
+                                                    AudioManager.instance.play(Assets.instance.sound.powerup);
+                                                }
+                                            }
+                                            // Check for contact between player and Goal
+                                            else if(object.getBody().getUserData() instanceof Goal)
+                                            {
+                                                Gdx.app.debug(TAG, " Player <-> Goal");
+                                                
+                                                Goal goal = (Goal) object.getBody().getUserData();
+                                                
+                                                if(!goal.reached)
+                                                {
+                                                    goal.onPlayerReached();
+                                                    level.player.onGoalReached();
+                                                    level.goalReached = true;
+                                                    timeLeftGameOverDelay = Constants.GAME_OVER_DELAY;
+                                                    score += Constants.GOAL_REACHED;
+                                                }
+                                            }
                                         }
                                         
                                         
@@ -137,10 +185,14 @@ public class WorldController extends InputAdapter
                                 });
     }
     
+    /**
+     * Initializes the level
+     */
     private void initLevel()
     {
         level = new Level(Constants.LEVEL_01);
         cameraHelper.setTarget(level.player);
+        initPhysics();
     }
     
     /**
@@ -151,21 +203,57 @@ public class WorldController extends InputAdapter
     public void update(float deltaTime)
     {
         
-        handleDebugInput(deltaTime);
+        handleInput(deltaTime);
         level.update(deltaTime);
         world.step(deltaTime, 8, 3);
         
-        if(level.player.position.y < -5)
+        cameraHelper.update(deltaTime);
+        
+        if(isGameOver() || level.goalReached)
+        {
+            timeLeftGameOverDelay -= deltaTime;
+            
+            if(timeLeftGameOverDelay < 0)
+            {
+                backToMenu();
+                return;
+            }
+        }
+        
+        // Check if player has fallen off
+        else if(level.player.position.y < -5)
         {
             // Play life lost sound ?
             lives--;
-            initLevel();
-            initPhysics();
+            
+            if(isGameOver())
+            {
+                timeLeftGameOverDelay = Constants.GAME_OVER_DELAY;
+            }
+            else
+                initLevel();
         }
-        
-        cameraHelper.update(deltaTime);
+    }
+    
+    /**
+     * Check if the game is over
+     * @return true if the game is over
+     */
+    public boolean isGameOver()
+    {
+        if(lives < 0)
+            return true;
+        else
+            return false;
     }
 
+    /**
+     * Return player to the menu screen
+     */
+    private void backToMenu()
+    {
+        game.setScreen(new MenuScreen(game));
+    }
     /**
      * Handles some special inputs for resetting game world and switching camera target
      * @param keycode the keycode for the pressed key
@@ -182,20 +270,30 @@ public class WorldController extends InputAdapter
         // Toggle camera follow
         else if (keycode == Keys.ENTER)
         {
-            cameraHelper.setTarget(null);
-            Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+            if(cameraHelper.hasTarget())
+            {
+                cameraHelper.setTarget(null);
+                Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+            }
+            else
+            {
+                cameraHelper.setTarget(level.player);
+                cameraHelper.setZoom(1.0f);
+                Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+            }
         }
         
         return false;
     }
 
     /**
-     * Handle debug input, allows testing during development. Enables control of
-     * primary (non-gui) camera.
+     * Handle input, allows camera testing by toggling camera target. Enables control of
+     * primary (non-gui) camera. If camera controls are not enabled (target is Player)
+     * and the goal has not been reached, then controls are handled by the Player class.
      * 
      * @param deltaTime time passed since the previous frame
      */
-    private void handleDebugInput(float deltaTime)
+    private void handleInput(float deltaTime)
     {
         if (Gdx.app.getType() != ApplicationType.Desktop)
             return;
@@ -230,7 +328,7 @@ public class WorldController extends InputAdapter
             if (Gdx.input.isKeyPressed(Keys.SLASH))
                 cameraHelper.setZoom(1);
         }
-        else
+        else if(!level.goalReached)
         {
             level.player.handleInput();
         }

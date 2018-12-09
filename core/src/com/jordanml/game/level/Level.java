@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 import com.jordanml.game.objects.Land;
+import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Background;
+import com.jordanml.game.objects.Bats;
 import com.jordanml.game.objects.Candycorn;
+import com.jordanml.game.objects.Goal;
 
 public class Level
 {
@@ -18,8 +21,13 @@ public class Level
     // Objects
     public Array<Candycorn> candycorns;
     public Array<Land> lands;
+    public Array<Orb> orbs;
     public Background background;
     public Player player;
+    public Bats bats;
+    public Goal goal;
+    
+    public boolean goalReached;
     
     public enum BLOCK_TYPE
     {
@@ -28,6 +36,7 @@ public class Level
         LAND_NORM    (  0, 255,   0), // Green
         LAND_FLOAT   (  0, 255, 255), // Green + Blue
         CANDY_CORN   (255, 255,   0), // Yellow
+        ORB          (  0,   0, 255), // Blue
         GOAL         (255,   0,   0); // Red
         
         // The color of the block
@@ -78,8 +87,11 @@ public class Level
     private void init(String filename)
     {
         candycorns = new Array<Candycorn>();
+        orbs = new Array<Orb>();
         lands = new Array<Land>();
         background = new Background(20,15);
+        
+        goalReached = false;
         
         // Load image file that represents the level data
         Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
@@ -140,8 +152,7 @@ public class Level
                 else if(BLOCK_TYPE.CANDY_CORN.sameColor(currentPixel))
                 {
                     obj = new Candycorn();
-                    offsetHeight = 2.5f;
-                    obj.position.set(pixelX, baseHeight *  obj.dimension.y + offsetHeight);
+                    obj.position.set(pixelX, baseHeight + offsetHeight);
                     candycorns.add((Candycorn) obj);
                 }
                 else if(BLOCK_TYPE.PLAYER_SPAWN.sameColor(currentPixel))
@@ -149,6 +160,18 @@ public class Level
                     obj = new Player();
                     obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
                     player = (Player) obj;
+                }
+                else if(BLOCK_TYPE.ORB.sameColor(currentPixel))
+                {
+                    obj = new Orb();
+                    obj.position.set(pixelX, baseHeight + offsetHeight);
+                    orbs.add((Orb) obj);
+                }
+                else if(BLOCK_TYPE.GOAL.sameColor(currentPixel))
+                {
+                    obj = new Goal();
+                    obj.position.set(pixelX, baseHeight + offsetHeight);
+                    goal = (Goal) obj;
                 }
                 else
                 {
@@ -163,6 +186,10 @@ public class Level
                 lastPixel = currentPixel;
             }
         }
+        
+        // Bats initialized last, requires player position
+        bats = new Bats(50.0f, this);
+        bats.updatePlayerY(player.position.y);
     }
     
     /**
@@ -192,7 +219,15 @@ public class Level
             land.update(deltaTime);
         }
         
+        for(Orb orb : orbs)
+        {
+            orb.update(deltaTime);
+        }
+        
         player.update(deltaTime);
+        bats.updatePlayerY(player.position.y);
+        bats.update(deltaTime);
+        goal.update(deltaTime);
     }
     
     /**
@@ -214,7 +249,14 @@ public class Level
             land.render(batch);
         }
         
+        for(Orb orb : orbs)
+        {
+            orb.render(batch);
+        }
+        
+        goal.render(batch);
         player.render(batch);
+        bats.render(batch);
     }
 }
 

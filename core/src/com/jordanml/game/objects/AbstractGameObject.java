@@ -1,6 +1,8 @@
 package com.jordanml.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -37,6 +39,13 @@ public abstract class AbstractGameObject
     public Rectangle bounds;
     
     /**
+     * stateTime - where we are in the current animation
+     * animation - the current animation
+     */
+    public float stateTime;
+    public Animation<TextureRegion> animation;
+    
+    /**
      * Constructor, initializes members
      */
     public AbstractGameObject()
@@ -60,12 +69,14 @@ public abstract class AbstractGameObject
      * @param deltaTime time passed since the previous frame
      */
     public void update(float deltaTime)
-    {        
-       if(body != null)
-       {
-           position.set(body.getPosition());
-           rotation = body.getAngle() * MathUtils.radiansToDegrees;
-       }
+    {
+        stateTime += deltaTime;
+        
+        if(body != null)
+        {
+            position.set(body.getPosition());
+            rotation = body.getAngle() * MathUtils.radiansToDegrees;
+        }
     }
     
     /**
@@ -74,4 +85,16 @@ public abstract class AbstractGameObject
      * @param deltaTime time passed since the previous frame
      */
     public abstract void render(SpriteBatch batch);
+    
+    /**
+     * Sets this object's current animation to the given animation
+     * Resets state time to 0.
+     * 
+     * @param animation - the desired animation
+     */
+    public void setAnimation(Animation<TextureRegion> animation)
+    {
+        this.animation = animation;
+        stateTime = 0;
+    }
 }

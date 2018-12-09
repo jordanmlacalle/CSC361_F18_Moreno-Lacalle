@@ -2,6 +2,8 @@ package com.jordanml.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.jordanml.game.assets.Assets;
+import com.jordanml.game.util.AudioManager;
+import com.jordanml.game.util.Constants;
 
 public class Player extends AbstractGameObject
 {
@@ -36,13 +40,23 @@ public class Player extends AbstractGameObject
     enum JUMP_STATE
     {
         JUMP_START,
+        JUMPING,
         GROUNDED;
     }
+    
+    // Player animations
+    private Animation<TextureRegion> animIdle;
+    private Animation<TextureRegion> animRun;
+    private Animation<TextureRegion> animJump;
     
     private VIEW_DIRECTION viewDirection;
     private MOVE_STATE moveState;
     private JUMP_STATE jumpState;
-    private TextureRegion player;
+    
+    private boolean hasOrb;
+    private boolean goalReached;
+    private float orbTimeout;
+    private ParticleEffect dustParticles;
     
     public Player()
     {
@@ -54,8 +68,18 @@ public class Player extends AbstractGameObject
      */
     private void init()
     {
-        // Until animation is added, Player sprite is a still image
-        player = Assets.instance.player.player;
+        // Init animations
+        animIdle = Assets.instance.player.animIdle;
+        animRun = Assets.instance.player.animRun;
+        animJump = Assets.instance.player.animJump;
+        dustParticles = new ParticleEffect();
+        dustParticles.load(Gdx.files.internal("particles/dust.pfx"), Gdx.files.internal("particles"));
+        
+        // Set initial animation
+        setAnimation(animIdle);
+        
+        hasOrb = false;
+        goalReached = false;
         
         // Set Player dimensions
         dimension.set(1, 1);        
@@ -108,6 +132,11 @@ public class Player extends AbstractGameObject
     public void update(float deltaTime)
     {
         super.update(deltaTime);
+        dustParticles.update(deltaTime);
+        
+        if(hasOrb)
+            orbTimeout -= deltaTime;
+        
         velocity = body.getLinearVelocity();
         
         if(velocity.x < 0)
@@ -121,6 +150,36 @@ public class Player extends AbstractGameObject
         
         // Update velocity
         step();
+        
+        // Player just jumped
+        if(jumpState == JUMP_STATE.JUMP_START)
+        {
+            setAnimation(animJump);
+            jumpState = JUMP_STATE.JUMPING;
+        }
+        
+        if(animation == animJump)
+        {
+            if(animation.isAnimationFinished(stateTime))
+                animation = animRun;
+        }
+        
+        if(jumpState == JUMP_STATE.GROUNDED)
+        {
+            if(moveState != MOVE_STATE.STOPPED)
+            {
+                animation = animRun;
+                dustParticles.setPosition(position.x + dimension.x / 2, position.y + 0.1f);
+                dustParticles.start();
+            }
+            else
+            {
+                animation = animIdle;
+                dustParticles.allowCompletion();
+            }
+        }
+        else
+           dustParticles.allowCompletion();
     }
     
     /**
@@ -132,8 +191,9 @@ public class Player extends AbstractGameObject
     public void render(SpriteBatch batch)
     {
         TextureRegion reg = null;
-        
-        reg = player;
+                
+        // Render dust particles
+        dustParticles.draw(batch);
         
         boolean flip = false;
         
@@ -141,6 +201,8 @@ public class Player extends AbstractGameObject
         {
             flip = true;
         }
+        
+        reg = animation.getKeyFrame(stateTime, true);
         
         batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y,
                 scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
@@ -196,14 +258,41 @@ public class Player extends AbstractGameObject
         switch(jumpState)
         {
             case JUMP_START:
-                vel.y = 5.0f;
-                jumpState = JUMP_STATE.GROUNDED;
+                AudioManager.instance.play(Assets.instance.sound.jump);
+                if(hasOrb)
+                {                    
+                    if(orbTimeout > 0)
+                        vel.y = 10.0f;
+                    else
+                        hasOrb = false;
+                }
+                else
+                    vel.y = 5.0f;
                 break;
+            case JUMPING:
+                if(vel.y == 0.0f)
+                    jumpState = JUMP_STATE.GROUNDED;
             case GROUNDED:
                 break;
         }
         
         body.setLinearVelocity(vel);
     }
-
+    
+    /**
+     * Method to be called when the player collects an orb
+     */
+    public void collectedOrb()
+    {
+        hasOrb = true;
+        orbTimeout = Constants.ORB_TIMEOUT;
+    }
+    
+    /**
+     * Method to be called when the player reaches the goal. Sets goalReahed flag.
+     */
+    public void onGoalReached()
+    {
+        goalReached = true;
+    }
 }
