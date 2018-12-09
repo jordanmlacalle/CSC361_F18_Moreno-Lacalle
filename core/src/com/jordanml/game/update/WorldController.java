@@ -91,6 +91,8 @@ public class WorldController extends InputAdapter
         }
         
         level.player.initPhysics(world);
+        level.bats.initPhysics(world);
+        level.bats.init();
         level.goal.initPhysics(world);
         
         world.setContactListener(new ContactListener()

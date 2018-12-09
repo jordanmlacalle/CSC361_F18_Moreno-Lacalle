@@ -32,6 +32,7 @@ public class Assets implements Disposable, AssetErrorListener
     public AssetLand land;
     public AssetDecorations decorations;
     public AssetPlayer player;
+    public AssetBat bat;
     public AssetGui gui;
     public AssetMusic music;
     public AssetSound sound;
@@ -77,6 +78,7 @@ public class Assets implements Disposable, AssetErrorListener
         land = new AssetLand(atlas);
         decorations = new AssetDecorations(atlas);
         player = new AssetPlayer(atlas);
+        bat = new AssetBat(atlas);
         gui = new AssetGui(atlas);
         music = new AssetMusic(assetManager);
         sound = new AssetSound(assetManager);
@@ -132,6 +134,22 @@ public class Assets implements Disposable, AssetErrorListener
         }
     }
     
+    /**
+     * Class that acts as a container for Bat assets
+     */
+    public class AssetBat
+    {
+        public final Animation<TextureRegion> animNormal;
+        
+        public AssetBat(TextureAtlas atlas)
+        {
+            Array<AtlasRegion> regions = null;
+            
+            // Normal animation
+            regions = atlas.findRegions("bat");
+            animNormal = new Animation<TextureRegion>(1.0f / 10.0f, regions, Animation.PlayMode.LOOP);
+        }
+    }
     /**
      * Class that acts as a container for Land assets
      */
