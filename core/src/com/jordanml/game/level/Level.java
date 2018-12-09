@@ -10,6 +10,7 @@ import com.jordanml.game.objects.Orb;
 import com.jordanml.game.objects.Player;
 import com.jordanml.game.objects.AbstractGameObject;
 import com.jordanml.game.objects.Background;
+import com.jordanml.game.objects.Bats;
 import com.jordanml.game.objects.Candycorn;
 import com.jordanml.game.objects.Goal;
 
@@ -23,6 +24,7 @@ public class Level
     public Array<Orb> orbs;
     public Background background;
     public Player player;
+    public Bats bats;
     public Goal goal;
     
     public boolean goalReached;
@@ -184,6 +186,10 @@ public class Level
                 lastPixel = currentPixel;
             }
         }
+        
+        // Bats initialized last, requires player position
+        bats = new Bats(50.0f, this);
+        bats.updatePlayerY(player.position.y);
     }
     
     /**
@@ -217,7 +223,10 @@ public class Level
         {
             orb.update(deltaTime);
         }
+        
         player.update(deltaTime);
+        bats.updatePlayerY(player.position.y);
+        bats.update(deltaTime);
         goal.update(deltaTime);
     }
     
@@ -247,6 +256,7 @@ public class Level
         
         goal.render(batch);
         player.render(batch);
+        bats.render(batch);
     }
 }
 
