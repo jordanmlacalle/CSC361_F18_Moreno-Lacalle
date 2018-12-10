@@ -293,6 +293,10 @@ public class Player extends AbstractGameObject
      */
     public void onGoalReached()
     {
+        Vector2 vel = body.getLinearVelocity();
+        vel.x = 0;
+        body.setLinearVelocity(vel);
         goalReached = true;
+        
     }
 }

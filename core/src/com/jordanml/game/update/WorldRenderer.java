@@ -1,6 +1,7 @@
 package com.jordanml.game.update;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -100,6 +101,7 @@ public class WorldRenderer implements Disposable
         renderGuiLives(batch);
         renderGuiScore(batch);
         renderGuiGameOverMessage(batch);
+        renderGuiScoreList(batch);
         
         if(GamePreferences.instance.showFpsCounter)
             renderGuiFpsCounter(batch);
@@ -163,6 +165,42 @@ public class WorldRenderer implements Disposable
             BitmapFont fontGameOver = Assets.instance.fonts.defaultBig;
             fontGameOver.setColor(1, 0.75f, 0.25f, 1);
             fontGameOver.draw(batch, "GAME OVER", x, y, 0, Align.center, false);
+            fontGameOver.setColor(1, 1, 1, 1);
+        }
+    }
+    
+    private void renderGuiScoreList(SpriteBatch batch)
+    {
+        Preferences scores = Gdx.app.getPreferences("scores");
+        
+        String scoreVals[];
+        int temp;
+        
+        scoreVals = new String [Constants.NUM_SCORES];
+        
+        for(int i = 0; i < Constants.NUM_SCORES; i++)
+        {
+            temp = scores.getInteger("score_" + i);
+            if(temp < 0)
+                scoreVals[i] = "----";
+            else
+                scoreVals[i] = String.valueOf(temp);
+        }
+        
+        float x = cameraGui.viewportWidth / 2;
+        float y = cameraGui.viewportHeight / 2;
+        float offset = 30.0f;
+        
+        if (worldController.isGameWon())
+        {
+            BitmapFont fontGameOver = Assets.instance.fonts.defaultBig;
+            fontGameOver.setColor(1, 0.75f, 0.25f, 1);
+            
+            for(int i = 0; i < Constants.NUM_SCORES; i++)
+            {
+                fontGameOver.draw(batch, ")" + (i + 1)  + " " + scoreVals[i], x, y - (Constants.NUM_SCORES - i) * offset, 0, Align.center, false);
+            }
+
             fontGameOver.setColor(1, 1, 1, 1);
         }
     }
