@@ -2,6 +2,7 @@ package com.jordanml.game.update;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -45,6 +46,7 @@ public class WorldController extends InputAdapter
     
     private Game game;
     private float timeLeftGameOverDelay;
+    private Preferences scores;
     
     public WorldController(Game game)
     {
@@ -57,6 +59,20 @@ public class WorldController extends InputAdapter
      */
     public void init()
     {
+        scores = Gdx.app.getPreferences("scores");
+        
+        boolean firstPlay = scores.getBoolean("first_play", true);
+        
+        if(firstPlay)
+        {
+            for(int i = 0; i < Constants.NUM_SCORES; i++)
+            {
+                scores.putInteger("score_" + i, -1);
+            }
+
+            scores.putBoolean("first_play", false);
+        }
+        
         // Set world controller as input processor
         Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
@@ -156,6 +172,7 @@ public class WorldController extends InputAdapter
                                                     level.goalReached = true;
                                                     timeLeftGameOverDelay = Constants.GAME_OVER_DELAY;
                                                     score += Constants.GOAL_REACHED;
+                                                    updateScores();
                                                 }
                                             }
                                         }
@@ -209,7 +226,7 @@ public class WorldController extends InputAdapter
         
         cameraHelper.update(deltaTime);
         
-        if(isGameOver() || level.goalReached)
+        if(isGameOver() || isGameWon())
         {
             timeLeftGameOverDelay -= deltaTime;
             
@@ -236,6 +253,31 @@ public class WorldController extends InputAdapter
     }
     
     /**
+     * Updates the high score list
+     */
+    private void updateScores()
+    {
+        int temp;
+        boolean scorePlaced = false;
+        
+        int i = 0;
+        
+        while(i < Constants.NUM_SCORES)
+        {
+            temp = scores.getInteger("score_" + i);
+            
+            if(score > temp)
+            {
+                scores.putInteger("score_" + i, score);
+                i = Constants.NUM_SCORES;
+                scores.flush();
+            }
+            else
+                i++;
+        }
+    }
+    
+    /**
      * Check if the game is over
      * @return true if the game is over
      */
@@ -245,6 +287,15 @@ public class WorldController extends InputAdapter
             return true;
         else
             return false;
+    }
+    
+    /**
+     * Check if the game was won
+     * @return
+     */
+    public boolean isGameWon()
+    {
+        return level.goalReached;
     }
 
     /**

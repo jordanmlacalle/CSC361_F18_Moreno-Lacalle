@@ -1,6 +1,7 @@
 package com.jordanml.game.level;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -28,7 +29,7 @@ public class Level
     public Goal goal;
     
     public boolean goalReached;
-    
+        
     public enum BLOCK_TYPE
     {
         EMPTY        (  0,   0,   0), // Black

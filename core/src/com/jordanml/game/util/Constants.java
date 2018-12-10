@@ -42,4 +42,5 @@ public class Constants
     public static final int ORB_TIMEOUT = 10;
     public static final int GAME_OVER_DELAY = 5;
     public static final int GOAL_REACHED = 400;
+    public static final int NUM_SCORES = 3;
 }
